@@ -1,6 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
+# 
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReformatOnCopy", "ReformatOnCopy.csproj", "{7CEAC41B-40AB-40F7-B06B-43DF3F0E3025}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReformatOnCopyTests", "ReformatOnCopyTests\ReformatOnCopyTests.csproj", "{CBD849C3-E871-4E5F-B5AA-9686B9B357D4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "benchmark", "benchmark\benchmark.csproj", "{D2D7B680-B9A4-4197-8B31-58AA8B60016D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -12,5 +17,13 @@ Global
 		{7CEAC41B-40AB-40F7-B06B-43DF3F0E3025}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7CEAC41B-40AB-40F7-B06B-43DF3F0E3025}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7CEAC41B-40AB-40F7-B06B-43DF3F0E3025}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CBD849C3-E871-4E5F-B5AA-9686B9B357D4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CBD849C3-E871-4E5F-B5AA-9686B9B357D4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CBD849C3-E871-4E5F-B5AA-9686B9B357D4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CBD849C3-E871-4E5F-B5AA-9686B9B357D4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D2D7B680-B9A4-4197-8B31-58AA8B60016D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D2D7B680-B9A4-4197-8B31-58AA8B60016D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D2D7B680-B9A4-4197-8B31-58AA8B60016D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D2D7B680-B9A4-4197-8B31-58AA8B60016D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

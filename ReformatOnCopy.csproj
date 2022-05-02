@@ -7,5 +7,29 @@
         <Nullable>enable</Nullable>
         <UseWindowsForms>true</UseWindowsForms>
     </PropertyGroup>
+    
+    <PropertyGroup Condition=" '$(Configuration)' == 'Release'">
+        <PlatformTarget>AnyCPU</PlatformTarget>
+        <DebugType>pdbonly</DebugType>
+        <DebugSymbols>true</DebugSymbols>
+        <Optimize>true</Optimize>
+        <Configuration>Release</Configuration>
+        <IsPackable>false</IsPackable>
+    </PropertyGroup>
+    
+    <ItemGroup>
+        <Compile Remove="benchmark\**" />
+        <Compile Remove="ReformatOnCopyTests\**" />
+    </ItemGroup>
+    
+    <ItemGroup>
+      <EmbeddedResource Remove="benchmark\**" />
+      <EmbeddedResource Remove="ReformatOnCopyTests\**" />
+    </ItemGroup>
+    
+    <ItemGroup>
+      <None Remove="benchmark\**" />
+      <None Remove="ReformatOnCopyTests\**" />
+    </ItemGroup>
 
 </Project>

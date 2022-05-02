@@ -8,16 +8,13 @@ namespace ReformatOnCopy;
 
 public class SharpClipboard : Form
 {
-    
-    [DllImport("user32.dll")]
-    private static extern int SendMessage(nint hwnd, int wMsg, nint wParam, nint lParam);
-
     /// <summary>
     /// <a href="https://docs.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-addclipboardformatlistener">AddClipboardFormatListener</a>
     /// </summary>
     /// <param name="hwnd">A handle to the window to be placed in the clipboard format listener list.</param>
     /// <returns>Returns TRUE if successful, FALSE otherwise. Call GetLastError for additional details.</returns>
-    [DllImport("user32.dll")]
+    [DllImport("user32.dll", SetLastError = true)]
+    [return: MarshalAs(UnmanagedType.Bool)]
     private static extern bool AddClipboardFormatListener(nint hwnd);
     
     /// <summary>
@@ -25,8 +22,22 @@ public class SharpClipboard : Form
     /// </summary>
     /// <param name="hwnd">A handle to the window to remove from the clipboard format listener list.</param>
     /// <returns>Returns TRUE if successful, FALSE otherwise. Call GetLastError for additional details.</returns>
-    [DllImport("user32.dll")]
+    [DllImport("user32.dll", SetLastError = true)]
+    [return: MarshalAs(UnmanagedType.Bool)]
     private static extern bool RemoveClipboardFormatListener(nint hwnd);
+    
+    /// <summary>
+    /// <a href="https://docs.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-setparent">SetParent</a>
+    /// </summary>
+    /// <param name="hWndChild">A handle to the child window.</param>
+    /// <param name="hWndNewParent">A handle to the new parent window. If this parameter is NULL, the desktop window becomes the new parent window. If this parameter is <see cref="HWND_MESSAGE"/>, the child window becomes a message-only window.</param>
+    /// <returns></returns>
+    [DllImport("user32.dll", SetLastError = true)]
+    public static extern nint SetParent(nint hWndChild, nint hWndNewParent);
+    
+    //Reference https://www.pinvoke.net/default.aspx/Constants.HWND
+    // ReSharper disable once InconsistentNaming
+    public const nint HWND_MESSAGE = -3;
     
     /// <summary>
     /// <a href="https://docs.microsoft.com/en-us/windows/win32/dataxchg/wm-clipboardupdate">WM_CLIPBOARDUPDATE</a>
@@ -43,7 +54,8 @@ public class SharpClipboard : Form
     
     public SharpClipboard()
     {
-        Opacity = 0;
+        // Turn the window into a message-only window
+        SetParent(Handle, HWND_MESSAGE);
         ShowIcon = false;
         ShowInTaskbar = false;
         WindowState = FormWindowState.Minimized;
@@ -75,7 +87,7 @@ public class SharpClipboard : Form
             }
             else
             {
-                ClipboardChanged?.Invoke(this, new(text, Process.GetCurrentProcess().ProcessName));
+                ClipboardChanged?.Invoke(this, new(text, getApplicationName()));
             }
         }
     }
@@ -87,6 +99,7 @@ public class SharpClipboard : Form
         {
             throw new("Failed to register hidden window as format listener.");
         }
+        Hide();
 
         Ready = true;
     }
@@ -104,9 +117,8 @@ public class SharpClipboard : Form
     /// </summary>
     protected override CreateParams CreateParams
     {
-        get {
-
-
+        get 
+        {
             var cp = base.CreateParams;
 
             // Turn on WS_EX_TOOLWINDOW.
