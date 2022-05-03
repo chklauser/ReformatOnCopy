@@ -1,11 +1,7 @@
-﻿using System;
-using BenchmarkDotNet;
-using BenchmarkDotNet.Attributes;
+﻿using BenchmarkDotNet.Attributes;
 using BenchmarkDotNet.Columns;
 using BenchmarkDotNet.Configs;
 using BenchmarkDotNet.Diagnosers;
-using BenchmarkDotNet.Environments;
-using BenchmarkDotNet.Filters;
 using BenchmarkDotNet.Jobs;
 using ReformatOnCopy;
 // ReSharper disable StringLiteralTypo
@@ -36,38 +32,40 @@ public class ReformatterBenchmarks
     [ParamsAllValues]
     public Texts Text { get; set; }
 
-    private Reformatter reformatterHeadingInterpreted = null!;
-    private Reformatter reformatterHeadingCompiled = null!;
+    private Reformatter reformatterHeadingBaseline = null!;
+    private Reformatter reformatterHeadingAlternative = null!;
+    private Reformatter reformatterHeadingRust = null!;
 
     [GlobalSetup]
     public void Setup()
     {
-        reformatterHeadingInterpreted = new(ReformatPasses.All, ReformatRegexMode.BogusCompiled);
-        reformatterHeadingCompiled = new(ReformatPasses.All,ReformatRegexMode.BogusCompiled | ReformatRegexMode.HeadingsCompiled);
+        reformatterHeadingBaseline = new(ReformatPasses.All,ReformatRegexMode.BogusCompiled | ReformatRegexMode.HeadingsCompiled);
+        reformatterHeadingAlternative = new(ReformatPasses.All,ReformatRegexMode.BogusCompiled | ReformatRegexMode.HeadingsCompiled, Reformatter.BreakDetector.Alternative);
+        reformatterHeadingRust = new(ReformatPasses.All,ReformatRegexMode.BogusCompiled | ReformatRegexMode.HeadingsCompiled, Reformatter.BreakDetector.Rust);
     }
 
     [Benchmark(Baseline = true)]
-    public string ReformatH0()
+    public string Reformat()
     {
-        return reformatterHeadingInterpreted.Reformat(_texts[(int)Text]);
+        return reformatterHeadingBaseline.Reformat(_texts[(int)Text]);
     }
 
-    [Benchmark]
-    public string ReformatHc()
-    {
-        return reformatterHeadingCompiled.Reformat(_texts[(int)Text]);
-    }
+    // [Benchmark]
+    // public string ReformatEx()
+    // {
+    //     return reformatterHeadingBaseline.ReformatEx(_texts[(int)Text]);
+    // }
+    //
+    // [Benchmark]
+    // public string ReformatAlt()
+    // {
+    //     return reformatterHeadingAlternative.ReformatAlt(_texts[(int)Text]);
+    // }
 
     [Benchmark]
-    public string ReformatH0Ex()
+    public string ReformatRust()
     {
-        return reformatterHeadingInterpreted.ReformatEx(_texts[(int)Text]);
-    }
-
-    [Benchmark]
-    public string ReformatHcEx()
-    {
-        return reformatterHeadingCompiled.ReformatEx(_texts[(int)Text]);
+        return reformatterHeadingRust.Reformat(_texts[(int)Text]);
     }
 
     #region Texts

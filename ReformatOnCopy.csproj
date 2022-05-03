@@ -6,6 +6,7 @@
         <ImplicitUsings>false</ImplicitUsings>
         <Nullable>enable</Nullable>
         <UseWindowsForms>true</UseWindowsForms>
+        <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     </PropertyGroup>
     
     <PropertyGroup Condition=" '$(Configuration)' == 'Release'">
@@ -13,23 +14,36 @@
         <DebugType>pdbonly</DebugType>
         <DebugSymbols>true</DebugSymbols>
         <Optimize>true</Optimize>
-        <Configuration>Release</Configuration>
         <IsPackable>false</IsPackable>
+    </PropertyGroup>
+    
+    <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
     </PropertyGroup>
     
     <ItemGroup>
         <Compile Remove="benchmark\**" />
         <Compile Remove="ReformatOnCopyTests\**" />
+        <Compile Remove="libreformat\**" />
     </ItemGroup>
     
     <ItemGroup>
       <EmbeddedResource Remove="benchmark\**" />
       <EmbeddedResource Remove="ReformatOnCopyTests\**" />
+      <EmbeddedResource Remove="libreformat\**" />
     </ItemGroup>
     
     <ItemGroup>
       <None Remove="benchmark\**" />
       <None Remove="ReformatOnCopyTests\**" />
+      <None Remove="libreformat\**" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <NativeLibs Include="$(MSBuildThisFileDirectory)\libreformat\target\release\*.dll" />
+        <None Include="@(NativeLibs)">
+            <Link>%(RecursiveDir)%(FileName)%(Extension)</Link>
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </None>
     </ItemGroup>
 
 </Project>

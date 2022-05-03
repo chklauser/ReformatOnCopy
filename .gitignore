@@ -6,3 +6,5 @@ riderModule.iml
 .idea
 BenchmarkDotNet.Artifacts/
 *.DotSettings.user
+target/
+*.dll
