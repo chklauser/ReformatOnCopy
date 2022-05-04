@@ -1,4 +1,5 @@
-﻿using BenchmarkDotNet.Attributes;
+﻿using System.Diagnostics.CodeAnalysis;
+using BenchmarkDotNet.Attributes;
 using BenchmarkDotNet.Columns;
 using BenchmarkDotNet.Configs;
 using BenchmarkDotNet.Diagnosers;
@@ -22,6 +23,7 @@ public class ReformatterBenchmarks
         }
     }
 
+    [SuppressMessage("ReSharper", "UnusedMember.Global")]
     public enum Texts
     {
         MertaliaProsePage = 0,
@@ -34,14 +36,12 @@ public class ReformatterBenchmarks
 
     private Reformatter reformatterHeadingBaseline = null!;
     private Reformatter reformatterHeadingAlternative = null!;
-    private Reformatter reformatterHeadingRust = null!;
 
     [GlobalSetup]
     public void Setup()
     {
-        reformatterHeadingBaseline = new(ReformatPasses.All,ReformatRegexMode.BogusCompiled | ReformatRegexMode.HeadingsCompiled);
-        reformatterHeadingAlternative = new(ReformatPasses.All,ReformatRegexMode.BogusCompiled | ReformatRegexMode.HeadingsCompiled, Reformatter.BreakDetector.Alternative);
-        reformatterHeadingRust = new(ReformatPasses.All,ReformatRegexMode.BogusCompiled | ReformatRegexMode.HeadingsCompiled, Reformatter.BreakDetector.Rust);
+        reformatterHeadingBaseline = new(ReformatPasses.All, ReformatRegexMode.NoneCompiled);
+        reformatterHeadingAlternative = new(ReformatPasses.All, ReformatRegexMode.NoneCompiled);
     }
 
     [Benchmark(Baseline = true)]
@@ -49,23 +49,10 @@ public class ReformatterBenchmarks
     {
         return reformatterHeadingBaseline.Reformat(_texts[(int)Text]);
     }
-
-    // [Benchmark]
-    // public string ReformatEx()
-    // {
-    //     return reformatterHeadingBaseline.ReformatEx(_texts[(int)Text]);
-    // }
-    //
-    // [Benchmark]
-    // public string ReformatAlt()
-    // {
-    //     return reformatterHeadingAlternative.ReformatAlt(_texts[(int)Text]);
-    // }
-
     [Benchmark]
-    public string ReformatRust()
+    public string ReformatAlt()
     {
-        return reformatterHeadingRust.Reformat(_texts[(int)Text]);
+        return reformatterHeadingAlternative.Reformat(_texts[(int)Text]);
     }
 
     #region Texts
