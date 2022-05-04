@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # 
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReformatOnCopy", "ReformatOnCopy.csproj", "{7CEAC41B-40AB-40F7-B06B-43DF3F0E3025}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReformatOnCopyTests", "ReformatOnCopyTests\ReformatOnCopyTests.csproj", "{CBD849C3-E871-4E5F-B5AA-9686B9B357D4}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReformatOnCopyTests", "tests\ReformatOnCopyTests.csproj", "{CBD849C3-E871-4E5F-B5AA-9686B9B357D4}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "benchmark", "benchmark\benchmark.csproj", "{D2D7B680-B9A4-4197-8B31-58AA8B60016D}"
 EndProject

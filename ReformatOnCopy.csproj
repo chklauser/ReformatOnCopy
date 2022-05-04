@@ -24,18 +24,21 @@
         <Compile Remove="benchmark\**" />
         <Compile Remove="ReformatOnCopyTests\**" />
         <Compile Remove="libreformat\**" />
+        <Compile Remove="tests\**" />
     </ItemGroup>
     
     <ItemGroup>
       <EmbeddedResource Remove="benchmark\**" />
       <EmbeddedResource Remove="ReformatOnCopyTests\**" />
       <EmbeddedResource Remove="libreformat\**" />
+      <EmbeddedResource Remove="tests\**" />
     </ItemGroup>
     
     <ItemGroup>
       <None Remove="benchmark\**" />
       <None Remove="ReformatOnCopyTests\**" />
       <None Remove="libreformat\**" />
+      <None Remove="tests\**" />
     </ItemGroup>
 
     <ItemGroup>
