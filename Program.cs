@@ -16,7 +16,7 @@ bool isSelf(string? programName) =>
         || programName.Contains("WindowsTerminal", StringComparison.OrdinalIgnoreCase)
     );
 
-var reformatter = new Reformatter();
+var reformatter = new Reformatter(Splittermond.Headings);
 var pump = new Thread(() =>
 {
     var monitor = new SharpClipboard()

@@ -1,9 +1,12 @@
 ﻿using System;
 using System.Buffers;
+using System.Collections.Generic;
+using System.Collections.Immutable;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Text.RegularExpressions;
+using JetBrains.Annotations;
 
 namespace ReformatOnCopy;
 
@@ -11,68 +14,110 @@ namespace ReformatOnCopy;
 public enum ReformatRegexMode
 {
     NoneCompiled = 0,
-    HeadingsCompiled = 2,
-    AllCompiled = HeadingsCompiled
+    AggregateHeadingsCompiled = 2,
+    IndividualHeadingsCompiled = 4,
+    AllCompiled = AggregateHeadingsCompiled | IndividualHeadingsCompiled
 }
 
 [Flags]
 public enum ReformatPasses
 {
     None = 0,
-    BogusLineBreaks = 1,
+    UnnecessaryLineBreaks = 1,
     DetectHeadings = 2,
-    All = BogusLineBreaks | DetectHeadings
+    All = UnnecessaryLineBreaks | DetectHeadings
 }
+
+public record HeadingPattern([RegexPattern] string Pattern, string Replacement, bool ExpectColon = true);
 
 public class Reformatter
 {
+    [RegexPattern]
+    private const string SpacePattern = @"[\t\p{Z}-[\p{Zl}]]";
+
+    private const string HeadingGroupName = "_heading";
+
     private readonly ReformatPasses passes;
 
-    private readonly Regex headings;
+    private readonly Regex? aggregateHeadingPattern;
+    private readonly ImmutableList<(HeadingPattern Pattern, Regex CachedRegex)> headingPatterns;
 
     [DllImport("libreformat", EntryPoint = "reformat", ExactSpelling = true)]
     static extern unsafe nint reformat(byte* inputBuf, int inputLen, byte* outputBuf, int outputCapacity);
-    
-    public Reformatter(ReformatPasses passes = ReformatPasses.All, ReformatRegexMode mode = ReformatRegexMode.HeadingsCompiled)
+
+    public Reformatter(
+        IEnumerable<HeadingPattern> headingPatterns,
+        ReformatPasses passes = ReformatPasses.All,
+        ReformatRegexMode mode = ReformatRegexMode.AllCompiled
+    )
     {
         this.passes = passes;
-        headings = new(
-            @"^(?<title1>Beispiele?|Probe|(Auswirkungen[\t\p{Z}-[\p{Zl}]]*)?Verheerend|Misslungen|Knapp misslungen|Gelungen|Herausragend|Landschaft|Klima|Flora und Fauna|Handel und Verkehr|Bevölkerung|Städte und Dörfer|Herrschaft|Wappen|Provinzen|Religion|Wer ist wer \w+([\t\p{Z}-[\p{Zl}]]+\w+){1,5}|Bemerkenswertes|Allgemeine Stimmung|Einwohner|Besonderheiten):[\t\p{Z}-[\p{Zl}]]*|(?<title2>Ausrüstung und Umstände)[\t\p{Z}-[\p{Zl}]]*",
-            compiledIf(ReformatRegexMode.HeadingsCompiled, mode, RegexOptions.Multiline | RegexOptions.CultureInvariant)
-        );
+
+        this.headingPatterns = headingPatterns
+            .Select(h => (
+                h with {Replacement = Regex.Replace(h.Replacement,@"(?!<\$)\$0", "${" + HeadingGroupName + "}")}, 
+                new Regex($@"^(?<{HeadingGroupName}>{h.Pattern})$", RegexOptions.CultureInvariant)))
+            .ToImmutableList();
+        if (AssembleHeadingPattern(this.headingPatterns.Select(x => x.Pattern)) is { } pattern)
+        {
+            aggregateHeadingPattern = new(pattern,
+                compiledIf(ReformatRegexMode.AggregateHeadingsCompiled, mode,
+                    RegexOptions.Multiline | RegexOptions.CultureInvariant)
+            );
+        }
+        else
+        {
+            this.aggregateHeadingPattern = null;
+        }
+    }
+
+    internal static string? AssembleHeadingPattern(IEnumerable<HeadingPattern> headingPatterns)
+    {
+        var result = "^" + string.Join('|', headingPatterns.GroupBy(p => p.ExpectColon)
+            .OrderByDescending(g => g.Key) // for predictability (colon first)
+            .Select(g =>
+                Regex.Replace(
+                    $@"(?<title{(g.Key ? "1" : "2")}>{string.Join('|', g.Select(h => h.Pattern))}){(g.Key ? ":" : "")}\s*",
+                    @"(?!<\\)\\s",
+                    SpacePattern
+                )
+            ));
+        return result == "^" ? null : result;
     }
 
     public string Reformat(string input)
     {
-        var breaksRemoved = enabled(ReformatPasses.BogusLineBreaks) ? removeLineBreaksViaRust(input) : input;
+        var breaksRemoved = enabled(ReformatPasses.UnnecessaryLineBreaks) ? removeLineBreaksViaRust(input) : input;
         //Console.WriteLine($"{breaksRemoved.Count(c => c == '\n')}]{breaksRemoved}");
         return
-            enabled(ReformatPasses.DetectHeadings) ?
-            headings.Replace(
-                breaksRemoved,
-                m =>
-                {
-                    var t = oneOf(m.Groups["title1"], m.Groups["title2"]);
-                    return t switch
-                    {
-                        "Auswirkungen Verheerend" => "## Auswirkungen\n\n### Verheerend\n\n",
-                        "Probe" or "Auswirkungen" or "Ausrüstung und Umstände" => $"## {t}\n\n",
-                        "Verheerend" or "Misslungen" or "Knapp misslungen" or "Gelungen" or "Herausragend" =>
-                            $"### {t}\n\n",
-                        "Beispiel" or "Beispiele" => $"**{t}**\n", // no paragraph break
-                        // Region
-                        "Landschaft" or "Klima" or "Flora und Fauna" or "Handel und Verkehr" or "Bevölkerung"
-                            or "Städte und Dörfer" or "Herrschaft" or "Wappen" or "Provinzen" or "Religion"
-                            or "Bemerkenswertes" or "Allgemeine Stimmung" or "Einwohner" or "Besonderheiten" =>
-                            $"## {t}\n\n",
-                        var x when x.StartsWith("Wer ist wer") => $"## {t}\n\n",
-                        // Fallback
-                        _ => m.Result("**$1**: ")
-                    };
-                }) : breaksRemoved;
+            aggregateHeadingPattern != null && enabled(ReformatPasses.DetectHeadings) 
+                ? reformatHeadings(breaksRemoved, aggregateHeadingPattern)
+                : breaksRemoved;
     }
 
-    private readonly ArrayPool<byte> pool = ArrayPool<byte>.Create(32*1024*1024, 50);
+    private string reformatHeadings(string input, Regex aggregatePattern)
+    {
+        return aggregatePattern.Replace(
+            input,
+            m =>
+            {
+                var content = oneOf(m.Groups["title1"], m.Groups["title2"]);
+                var (heading, match) = headingPatterns
+                    .Select(p => (p.Pattern, Match: p.CachedRegex.Match(content)))
+                    .FirstOrDefault(p => p.Match.Success);
+                if (heading == null)
+                {
+                    Console.WriteLine($"WARNING: no heading found for {content}");
+                    return m.Value;
+                }
+                else
+                {
+                    return match.Result(heading.Replacement);
+                }
+            });
+    }
+
+    private readonly ArrayPool<byte> pool = ArrayPool<byte>.Create(32 * 1024 * 1024, 50);
     private readonly Encoder encoder = Encoding.UTF8.GetEncoder();
 
     private string removeLineBreaksViaRust(string input)
@@ -80,7 +125,8 @@ public class Reformatter
         var inputBuf = pool.Rent(Encoding.UTF8.GetMaxByteCount(input.Length));
         var effectiveUtf8ByteCount = encoder.GetBytes(input.AsSpan(), inputBuf.AsSpan(), true);
         // Output can be at most 1.5 times the input size (and only in terms of ASCII characters)
-        var outputBuf = pool.Rent(effectiveUtf8ByteCount + effectiveUtf8ByteCount/2 + (effectiveUtf8ByteCount%2 == 0 ? 0 : 1));
+        var outputBuf = pool.Rent(effectiveUtf8ByteCount + effectiveUtf8ByteCount / 2 +
+            (effectiveUtf8ByteCount % 2 == 0 ? 0 : 1));
 
         string output;
         unsafe
@@ -89,15 +135,15 @@ public class Reformatter
             fixed (byte* outputPtr = outputBuf)
             {
                 var result = reformat(inputPtr, effectiveUtf8ByteCount, outputPtr, outputBuf.Length);
-                if(result < 0)
+                if (result < 0)
                 {
                     throw new("Error during line break detection. Error code: " + result);
                 }
-                
+
                 output = new((sbyte*)outputPtr, 0, (int)result, Encoding.UTF8);
             }
         }
-        
+
         pool.Return(inputBuf);
         pool.Return(outputBuf);
         return output;
@@ -112,7 +158,7 @@ public class Reformatter
     {
         return captures.First(c => c.Length > 0).Value;
     }
-    
+
 
     private static RegexOptions compiledIf(
         ReformatRegexMode condition,

@@ -36,12 +36,14 @@ public class ReformatterBenchmarks
 
     private Reformatter reformatterHeadingBaseline = null!;
     private Reformatter reformatterHeadingAlternative = null!;
+    private Reformatter reformatterHeadingAlternative2 = null!;
 
     [GlobalSetup]
     public void Setup()
     {
-        reformatterHeadingBaseline = new(ReformatPasses.All, ReformatRegexMode.NoneCompiled);
-        reformatterHeadingAlternative = new(ReformatPasses.All, ReformatRegexMode.NoneCompiled);
+        reformatterHeadingBaseline = new(Splittermond.Headings, ReformatPasses.All, ReformatRegexMode.AllCompiled);
+        reformatterHeadingAlternative = new(Splittermond.Headings, ReformatPasses.All, ReformatRegexMode.AggregateHeadingsCompiled);
+        reformatterHeadingAlternative2 = new(Splittermond.Headings, ReformatPasses.All, ReformatRegexMode.NoneCompiled);
     }
 
     [Benchmark(Baseline = true)]
@@ -53,6 +55,11 @@ public class ReformatterBenchmarks
     public string ReformatAlt()
     {
         return reformatterHeadingAlternative.Reformat(_texts[(int)Text]);
+    }
+    [Benchmark]
+    public string ReformatAlt2()
+    {
+        return reformatterHeadingAlternative2.Reformat(_texts[(int)Text]);
     }
 
     #region Texts

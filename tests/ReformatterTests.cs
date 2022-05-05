@@ -1,3 +1,4 @@
+using System.Linq;
 using FluentAssertions;
 using NUnit.Framework;
 using ReformatOnCopy;
@@ -11,7 +12,7 @@ public class ReformatterTests
     [SetUp]
     public void Setup()
     {
-        reformatter = new();
+        reformatter = new(Enumerable.Empty<HeadingPattern>());
     }
 
     [Test]
@@ -152,5 +153,85 @@ public class ReformatterTests
         
         // Assert
         result.Should().Be("Line break in\n\nthe middle of a sentence.");
+    }
+
+    [Test]
+    public void AssembleHeadings_Zero()
+    {
+        // Act
+        var result = Reformatter.AssembleHeadingPattern(Enumerable.Empty<HeadingPattern>());
+        
+        // Assert
+        result.Should().BeNull();
+    }
+
+    [Test]
+    public void AssembleHeadings_JustWithColon()
+    {
+        // Arrange
+        var headings = new HeadingPattern[]
+        {
+            new("h1", "# $0\n\n"),
+            new("h2", "## $0\n\n"),
+        };
+        
+        // Act
+        var result = Reformatter.AssembleHeadingPattern(headings);
+        
+        // Assert
+        result.Should().Be(@"^(?<title1>h1|h2):[\t\p{Z}-[\p{Zl}]]*");
+    }
+
+    [Test]
+    public void AssembleHeadings_JustWithoutColon()
+    {
+        // Arrange
+        var headings = new HeadingPattern[]
+        {
+            new("h1", "# $0\n\n", ExpectColon: false),
+            new("h2", "## $0\n\n", ExpectColon: false),
+        };
+        
+        // Act
+        var result = Reformatter.AssembleHeadingPattern(headings);
+        
+        // Assert
+        result.Should().Be(@"^(?<title2>h1|h2)[\t\p{Z}-[\p{Zl}]]*");
+    }
+
+    [Test]
+    public void AssembleHeadings_Both()
+    {
+        // Arrange
+        var headings = new HeadingPattern[]
+        {
+            new("h1", "# $0\n\n", ExpectColon: false),
+            new("h2", "## $0\n\n", ExpectColon: false),
+            new("h3", "### $0\n\n"),
+            new("h4", "#### $0\n\n"),
+        };
+        
+        // Act
+        var result = Reformatter.AssembleHeadingPattern(headings);
+        
+        // Assert
+        result.Should().Be(@"^(?<title1>h3|h4):[\t\p{Z}-[\p{Zl}]]*|(?<title2>h1|h2)[\t\p{Z}-[\p{Zl}]]*");
+    }
+
+    [Test]
+    public void AssembleHeadings_ReplaceSpacePattern()
+    {
+        // Arrange
+        var headings = new HeadingPattern[]
+        {
+            new(@"h1\s+h2", "# $0\n\n", ExpectColon: true),
+            new(@"h3\s+h4", "## $0\n\n", ExpectColon: false)
+        };
+        
+        // Act
+        var result = Reformatter.AssembleHeadingPattern(headings);
+        
+        // Assert
+        result.Should().Be(@"^(?<title1>h1[\t\p{Z}-[\p{Zl}]]+h2):[\t\p{Z}-[\p{Zl}]]*|(?<title2>h3[\t\p{Z}-[\p{Zl}]]+h4)[\t\p{Z}-[\p{Zl}]]*");
     }
 }
