@@ -26,9 +26,9 @@ public class ReformatterBenchmarks
     [SuppressMessage("ReSharper", "UnusedMember.Global")]
     public enum Texts
     {
-        MertaliaProsePage = 0,
-        FertigkeitHeilen = 1,
-        MertaliaShortListing = 2,
+        ProsePage = 0,
+        HeadingsHeavyPage = 1,
+        HeadingsHeavySnippet = 2,
     }
         
     [ParamsAllValues]
@@ -68,232 +68,232 @@ public class ReformatterBenchmarks
     {
         @"
 Klima
-Das angenehme Seeklima sorgt nicht nur für regelmäßige Ern-
-ten, sondern auch dafür, dass man von nördlich der Vogelber-
-ge neidisch auf die „elysischen“ Verhältnisse blickt: Die Winter
-sind mild und regenreich, bisweilen aber stürmisch, die Sommer
-warm, aber nur im Hochsommer in der Aylischen Ebene drü-
-ckend, und ein regelmäßiger Südwestwind sorgt selbst dann für
-Abkühlung.
-Schnee gibt es im Winter nur in den Gebirgen – am Südhang der
-Vogelberge und am Westhang der Ventellen dafür aber reichlich.
-Im Frühjahr verwandeln sich dann viele Bäche in reißende Ge-
-wässer, sodass einige Gebirgsorte für Wochen von der Außenwelt
-abgeschnitten sind.
+Zzzz Zzzzzzzzzz Zzzzzzzzz Zzzzzz Zzzzzz Zzzz Zzzz Zzzzzzzzzzzz Zzzz-
+Zzzz, Zzzzzzzz Zzzzz Zzzzzz, Zzzzz Zzzz Zzzz Zzzzzzzzz Zzzz Zzzzzzzzz-
+Zzz Zzzzzzzzz Zzzz Zzzz „Zzzzzzzzzzz“ Zzzzzzzzzzzzz Zzzzzzz: Zzzz Zzzzzzz
+Zzzzz Zzzzz und Zzzzzzzzzzz, Zzzzzzzzzz Zzzzz Zzzzzzzzzz, Zzzz Zzzzzzz
+Zzzzz, Zzzzz Zzzz Zzz Zzzzzzzzzzz Zzz Zzzz Zzzzzzzzzz Zzzzzz Zzzz-
+Zzzzzz, und Zzzz Zzzzzzzzzzzzz Zzzzzzzzzzzz Zzzzzz Zzzzzzz Zzzzz Zzzz
+Zzzzzzzzzz.
+Zzzzzzz Zzzzz Zzz Zzz Zzzzzzz Zzzz Zzz Zzzz Zzzzzzzzz – Zzz Zzzzzzzz Zzzz
+Zzzzzzzzzzz und Zzz Zzzzzzzzz Zzzz Zzzzzzzzzz Zzzzzz Zzzzz Zzzzzzzzzz.
+Zzz Zzzzzzzzz Zzzzzzzzzzz Zzzzz Zzzzz Zzzzzz Zzzzzz Zzz Zzzzzzzzz Zzz-
+Zzzzzzz, Zzzzzzz Zzzzzzz Zzzzzzzzzzzz Zzzz Zzzzzzz Zzzz Zzzz Zzzzzzzzzz
+Zzzzzzzzzzzzzz Zzzzz.
 Flora und Fauna
-Typische Bäume Mertalias sind Zedern, Zypressen, Eichen und
-Olivenbäume, aber viele ursprüngliche Bäume sind dem Holzhun-
-ger der Flotten zum Opfer gefallen. Echte Urwälder gibt es fast nur
-noch in schwer zugänglichen Gebirgstälern, dann meist Jagdreser-
-vate der städtischen Magnaten. Wo die alten Wälder gefallen sind,
-haben sie Heiden, Hochmooren und strauchreichen Karstflächen
-mit gelegentlichen Birken- und Kieferwäldern Platz gemacht.
-In der Umgebung der Metropolen ist das Land kultiviert, mit
-Hecken oder Zypressen gesäumte Felder und Weiden bedecken
-das Land. Weiter in den Bergen finden sich Äcker nur in direk-
-ter Nähe der Bergdörfer, aber die ein oder andere Lichtung hat
-Hochalmen Platz gemacht, auf denen Ziegen und Gebirgsrinder
-grasen. Wo noch alte Eichenwälder stehen, werden die Schweine
-des Dorfs geweidet. Wichtigste Getreide Mertalias sind Weizen
-und Reis, daneben werden Hülsenfrüchte und Kürbisse, Obst
-und Wein angebaut.
-Neben den genannten Nutztieren werden um Aylantha herum
-Schafe, Milchvieh und edle Reitpferde gezüchtet (andernorts
-sind eher Esel und Maultiere im Gebrauch), Eisenbrann ist
-bekannt für seine Kampf- und Jagdhunde, Talaberis für seine
-„Gnomenrinder“ – eine große, schmackhafte Hauskaninchenart.
-Die Gewässer um Mertalia sind fischreich, Sardinen, Thunfisch
-und Meeresfrüchte haben einen großen Anteil an der Nahrungs-
-versorgung.
-Größere wilde Tiere sind selten, bisweilen kann man in den alten
-Wäldern Wildschweinen oder Bären begegnen, aber schon die
-meisten Hirsche und Rehe sind bereits ausgewilderte Exemplare.
-Greifvögel und Kleinräuber können sich jedoch stellenweise zu
-einer echten Plage entwickeln.
-Außer einigen Schlangenarten (wie der kleinen Gürtelnat-
-ter), der gefürchteten Roten Hornisse und der Hundsspinne
-gibt es keine giftigen Tiere. Mythische und magische Bestien
-sind ebenso selten, was damit zusammenhängen mag, dass
-die wenigen Übergänge in die Feenwelten meist am oder im
-Wasser liegen.
-Magnaten und Bettler – die mertalische Gesellschaft
-Die meisten Bewohner leben in den Metropolen und den kleine-
-ren, tributpflichtigen Städten. Auch wenn natürlich viele Bauern
-in den Dörfern für Fleisch und Korn sorgen, ist die urbane Le-
-bensweise bestimmend für die mertalische Gesellschaft.
-An ihrer Spitze stehen die Magnaten, wohlhabende Handelsherren,
-mächtige Großgrundbesitzer oder Gildenvorsteher. Es gibt keine
-formellen Bedingungen, um zu dieser Klasse zu gehören, vielmehr
-muss man von den anderen Magnaten als ihresgleichen anerkannt
-werden – was zugegebenermaßen nur selten geschieht.
-An zweiter Stelle steht die breite Schicht der Bürger: Wer die
-jährliche Summe zum Erwerb eines Bürgerbriefes aufbringen
-kann, erhält damit Rechte, die ihn vor der völligen Willkür der
-Machthaber schützen sollen. In der Praxis sind die meisten Bür-
-ger einem Magnaten als Klienten verpflichtet und von seinem
-Wohlwollen abhängig.
-Ein Großteil der Einwohner Mertalias kann sich den Bürger-
-brief jedoch nicht leisten und gilt damit als Nichtbürger: Beinahe
-rechtlos schuften sie als Arbeiter in den Betrieben der Magnaten,
-erledigen niedere Dienste für die Bürgerschaft oder sind auf das
-Betteln angewiesen.
-Doch es geht noch schlimmer: Zwar gibt es im Städtebund keine
-Leibeigenschaft oder Sklaverei, doch das Los verurteilter Verbre-
-cher und säumiger Schuldner unterscheidet sich nicht sehr da-
-von. Als Schuldknechte werden sie in ganz Mertalia in Steinbrü-
-chen und Werften, als Wald- und Feldarbeiter eingesetzt.
-Die Gesellschaftsstruktur der Metropolen und Städte spiegelt
-sich auf dem Land und in den Dörfern in kleinerem Maßstab
-wieder: So mancher Großbauer spielt sich als Magnat auf, Mägde
-und Knechte werden wie Nichtbürger behandelt, der Rest ordnet
-sich irgendwo dazwischen ein.
-Mentalität
-Bereits zu Zeiten des Königreiches zählten die Taten jedes
-Einzelnen mehr als seine Herkunft und sein Geblüt. Der feste
-Glaube, hier durch eigene Leistung reich werden zu können,
-zog in den folgenden Jahrhunderten viele Einwanderer und
-Flüchtlinge an, sodass die Einwohnerschaft der Halbinsel heute
-ein regelrechtes Völkergemisch bildet. Dementsprechend zeich-
-nen sich die Mertalier durch Weltoffenheit und oftmals eine
-gute Menschenkenntnis aus. Darüber hinaus gelten sie als le-
-bensfroh, genussfreudig und neigen zu einer gewissen Schwatz-
-haftigkeit.
-Entgegen verbreiteter Vorurteile ist nicht jeder ein unehrenhafter
-Gauner und Halsabschneider, doch sind die meisten Einwohner
-des Städtebunds geschäftstüchtig und auf ihren gesunden Vorteil
-bedacht.
-Glaube und Magie
-Es gibt keine Staatsreligion oder auch nur ein festes Pantheon:
-Es wird der Gott angebetet, der in der jeweiligen Situation am
-besten hilft. So stehen in den mertalischen Metropolen Tempel
-so ziemlich jedes Gottes der Binnenmeerregion. Hinzu kom-
-men lokale Gottheiten, die als Schutzherr der jeweiligen Stadt
-gelten.
-Einzige Konstante des hiesigen Glaubens ist Ulmon der Bun-
-desherr, Schutzgott des Landes und personifizierte Einheit des
-mertalischen Bundes. Manche sehen in ihm den vergöttlichten
-Reichsgründer Darion Garameos, andere halten Ulmon für ein
-abstraktes Prinzip oder einen mächtigen Herrschaftsgott.
+Zzzzzzzzz Zzzzzz Zzzzzzzzzz Zzzzz Zzzzzzz, Zzzzzzzzzz, Zzzzzzz und
+Zzzzzzzzzzzz, Zzzzz Zzzzzz Zzzzzzzzzzzzzz Zzzzzz Zzzzz Zzzz Zzzzzzzz-
+Zzzz Zzzz Zzzzzzzz Zzzz Zzzzzz Zzzzzzzzz. Zzzzzz Zzzzzzzzz Zzzzz Zzz Zzzzz Zzzz
+Zzzzz Zzz Zzzzzzz Zzzzzzzzzzzzz Zzzzzzzzzzzzzz, Zzzzz Zzzzzz Zzzzzzzzzz-
+Zzzzz Zzzz Zzzzzzzzzzzz Zzzzzzzzz. Zzz Zzzz Zzzzzz Zzzzzzz Zzzzzzzzz Zzzzz,
+Zzzzzz Zzzz Zzzzzzz, Zzzzzzzzzzz und Zzzzzzzzzzzzzzz Zzzzzzzzzzzzz
+Zzzz Zzzzzzzzzzzzzzz Zzzzzzz- und Zzzzzzzzzzzzzz Zzzzzz Zzzzzzzz.
+Zzz Zzzz Zzzzzzzzz Zzzz Zzzzzzzzzzz Zzzz Zzzz Land Zzzzzzzzzzz, Zzzz
+Zzzzzzz Zzzzz Zzzzzzzzzz Zzzzzzzzz Zzzzzzz und Zzzzzzz Zzzzzzzzz
+Zzzz Land. Zzzzzzz Zzz Zzzz Zzzzzzz Zzzzzzz Zzzzz Zzzzzz Zzzz Zzz Zzzzzz-
+Zzzz Zzzzz Zzzz Zzzzzzzzzzz, Zzzzz Zzzz Zzzz Zzzzz Zzzzzzz Zzzzzzzzz Zzzz
+Zzzzzzzzzz Zzzzzz Zzzzzzzz, Zzzz Zzzzzz Zzzzzzz und Zzzzzzzzzzzzzz
+Zzzzzzz. Zzz Zzzzz Zzzzz Zzzzzzzzzzzzz Zzzzzzz, Zzzzzzz Zzzz Zzzzzzzzz
+Zzzz Zzzzzz Zzzzzzzzz. Zzzzzzzzzzz Zzzzzzzzz Zzzzzzzzzz Zzzzz Zzzzzzz
+und Zzzzz, Zzzzzzzz Zzzzzzz Zzzzzzzzzzzzzz und Zzzzzzzzz, Zzzzz
+und Zzzzz Zzzzzzzzz.
+Zzzzzz Zzzz Zzzzzzzzzz Zzzzzzzzzzz Zzzzzzz Zzz Zzzzzzzzz Zzzzzz
+Zzzzzzz, Zzzzzzzzzz und Zzzzz Zzzzzzzzzzz Zzzzzzzzzz (Zzzzzzzzzzz
+Zzzzz Zzzzz Zzzzz und Zzzzzzzzzz Zzz Zzzzzzzzz), Zzzzzzzzzzz Zzzz
+Zzzzzzzz Zzzz Zzzzzz Zzzzzz- und Zzzzzzzzzz, Zzzzzzzzzz Zzzz Zzzzzz
+„Zzzzzzzzzzzzz“ – Zzzzz Zzzzzz, Zzzzzzzzzzzzz Zzzzzzzzzzzzzzzzz.
+Zzzz Zzzzzzzzz Zzz Zzzzzzzzz Zzzzz Zzzzzzzzzzz, Zzzzzzzzz, Zzzzzzzzzz
+und Zzzzzzzzzzzzzz Zzzzzz Zzzzzz Zzzzzzz Zzzzzzz Zzz Zzzz Zzzzzzzzz-
+Zzzzzzzzzzz.
+Zzzzzzzz Zzzzzz Zzzzzz Zzzzz Zzzzzzz, Zzzzzzzzzz Zzzzz Zzzz Zzz Zzzz Zzzzzz
+Zzzzzzzz Zzzzzzzzzzzzzz Zzzzz Zzzzzz Zzzzzzzzz, Zzzzz Zzzzzz Zzzz
+Zzzzzzzz Zzzzzzzz und Zzzzz Zzzzz Zzzzzzzz Zzzzzzzzzzzzzz Zzzzzzzzzz.
+Zzzzzzzzzzz und Zzzzzzzzzzzz Zzzzzzz Zzzzz Zzzzzzz Zzzzzzzzzzzzz Zzz
+Zzzzzz Zzzzzzz Zzzzzz Zzzzzzzzzzz.
+Zzzzzz Zzzzzzzz Zzzzzzzzzzzzzzz (Zzzz Zzzz Zzzzzzzz Zzzzzzzzzz-
+Zzzz), Zzzz Zzzzzzzzzzzzz Zzzzzz Zzzzzzzzz und Zzzz Zzzzzzzzzzzz
+Zzzzz Zzz Zzzzzz Zzzzzzzzz Zzzzzz. Zzzzzzzzzz und Zzzzzzzzz Zzzzzzzz
+Zzzzz Zzzzzzz Zzzzzzz, Zzzz Zzzzzz Zzzzzzzzzzzzzzz Zzzz, Zzzzz
+Zzzz Zzzzzzzz Zzzzzzzzzz Zzz Zzzz Zzzzzzzzzzz Zzzzzz Zzz Zzzzz Zzz
+Zzzzzzz Zzzzzzz.
+Zzzzzzzzz und Zzzzzzzz – Zzzz Zzzzzzzzzzzz Zzzzzzzzzzzzz
+Zzzz Zzzzzzzz Zzzzzzzzz Zzzzzz Zzz Zzzz Zzzzzzzzzzz und Zzzz Zzzzzzz-
+Zzzz, Zzzzzzzzzzzzzzzzzz Zzzzzzzz. Zzzzz Zzzzz Zzzzzzzzzz Zzzzzz Zzzzzzz
+Zzz Zzzz Dörfern Zzzz Zzzzzzzz und Zzzzz Zzzzzzz, Zzzz Zzzz Zzzzzzz Zzz-
+Zzzzzzzzzz Zzzzzzzzzzz Zzzz Zzzz Zzzzzzzzzzzz Zzzzzzzzzzzzz.
+Zzz Zzzzzz Zzzzzzz Zzzzzzz Zzzz Zzzzzzzzz, Zzzzzzzzzzzz Handelsherren,
+Zzzzzzzzz Zzzzzzzzzzzzzzzzzz Zzzzz Zzzzzzzzzzzzzzzz. Zzz Zzzzz Zzzzzz
+Zzzzzzzzzz Zzzzzzzzzzzz, Zzz Zzz Zzzzzzz Zzzzzzz Zzz Zzzzzzzz, Zzzzzzzzz
+Zzzzz Zzzz Zzzz Zzzz Zzzzzzzz Zzzzzzzzz Zzzz Zzzzzzzzzzzzzz Zzzzzzzzzz
+Zzzzzzz – Zzzz Zzzzzzzzzzzzzzzzz Zzzz Zzzzzzz Zzzzzzzzzz.
+Zzz Zzzzzzzz Zzzzzzz Zzzzzz Zzzz Zzzzzzz Zzzzzzzz Zzzz Zzzzzzz: Zzzz Zzzz
+Zzzzzzzzzz Zzzzzz Zzzz Zzzzzzz Zzzzzz Zzzzzzzzzzzzzz Zzzzzzzzzzz
+Zzzzz, Zzzzzzz Zzzzzz Zzzzzzz, Zzzz Zzzz Zzzz Zzzz Zzzzzzzzz Zzzzzzzz Zzzz
+Zzzzzzzzzzz Zzzzzzzzz Zzzzzzz. Zzz Zzzz Zzzzzzz Zzzzz Zzzz Zzzzzzzz Zzzz-
+Zzzz Zzzzzz Zzzzzzzzz Zzzz Zzzzzzzzz Zzzzzzzzzzzzz und Zzzz Zzzzzzz
+Zzzzzzzzzzz Zzzzzzzzz.
+Zzzz Zzzzzzzzz Zzzz Einwohner Zzzzzzzzzz Zzzzz Zzzzz Zzzz Zzzzzzz-
+Zzzzzz Zzzzzzz Zzzzzz Zzzzzzzz und Zzzzz Zzzzzz Zzzz Zzzzzzzzzzzz: Zzzzzzzz
+Zzzzzzzzz Zzzzzzzzz Zzzz Zzzz Zzzzzzzzz Zzz Zzzz Zzzzzzzzzz Zzzz Zzzzzzzzz,
+Zzzzzzzzzz Zzzzzzzz Zzzzzzzz Zzzz Zzzz Zzzzzzzzzzzzz Zzzzz Zzzzz Zzzz Zzzz
+Zzzzzzzz Zzzzzzzzzzz.
+Zzzzz Zzz Zzzzz Zzzzz Zzzzzzzzzz: Zzzzz Zzzzz Zzz Zzz Zzzzzzzzzzz Zzzzzz
+Zzzzzzzzzzzzzzzz Zzzzz Zzzzzzzzzz, Zzzzz Zzzz Zzzz Zzzzzzzzzzzzz Zzzzzzz-
+Zzzzz und Zzzzzzzzz Zzzzzzzzzz Zzzzzzzzzzzzzz Zzzzz Zzzzzz Zzzzz Zzz-
+Zzzz. Zzzz Zzzzzzzzzzzzzz Zzzzzzz Zzzz Zzz Zzzzz Zzzzzzzzz Zzz Zzzzzzzzz-
+Zzzzz und Zzzzzzzz, Zzzz Zzzzz- und Zzzzzzzzzzzzz Zzzzzzzzzzz.
+Zzzz Zzzzzzzzzzzzzzzzzzzzzz Zzzz Zzzzzzzzzzz und Zzzzzzz Zzzzzzzzz
+Zzzzz Zzzz Zzzz Land und Zzz Zzzz Dörfern Zzz Zzzzzzzzzz Zzzzzzzz
+Zzzzzzz: Zzz Zzzzzzzz Zzzzzzzzzz Zzzzzzz Zzzzz Zzzz Zzzzzzz Zzzz, Zzzzzz
+und Zzzzzzzz Zzzzzzz Zzzz Zzzzzzzzzzzz Zzzzzzzzzz, Zzzz Zzzzz Zzzzzzz
+Zzzzz Zzzzzzzzz Zzzzzzzzzzz Zzzz.
+Zzzzzzzzzzz
+Zzzzzzzz Zzz Zzzzzzz Zzzz Zzzzzzzzzzzzz Zzzzzzzz Zzzz Zzzzzz Zzzzzz
+Zzzzzzzzzz Zzzzz Zzzz Zzzzzz Zzzzzzzzz und Zzzzz Zzzzzzz. Zzzz Zzzzzz
+Zzzzzzz, Zzzzz Zzzzzz Zzzzzzz Zzzzzzzzz Zzzzzz Zzzzzzz Zzz Zzzzzzz,
+Zzzz Zzz Zzzz Zzzzzzzzzz Zzzzzzzzzzzzzz Zzzzzz Zzzzzzzzzzzz und
+Zzzzzzzzzzzz Zzz, Zzzzzzz Zzzz Einwohnerschaft Zzzz Zzzzzzzzzz Zzzzzz
+Zzzz Zzzzzzzzzzzzz Zzzzzzzzzzzzzz Zzzzzzz. Zzzzzzzzzzzzzzzz Zzzzzz-
+Zzzz Zzzzz Zzzz Zzzzzzzzzz Zzzzzz Zzzzzzzzzzzzzz und Zzzzzzzz Zzzzz
+Zzzzz Zzzzzzzzzzzzzzzzz Zzzz. Zzzzzzzz Zzzzzzz Zzzzzzz Zzzz Zzzz Zzz-
+Zzzzzzzzz, Zzzzzzzzzzzzzz und Zzzzzzz Zzz Zzzzzz Zzzzzzzzz Zzzzzzzz-
+Zzzzzzzzzzz.
+Zzzzzzzzz Zzzzzzzzzzzzz Zzzzzzzzzzz Zzzz Zzzzzz Zzzzzz Zzzz Zzzzzzzzzzzzzz
+Zzzzzzz und Zzzzzzzzzzzzzzzz, Zzzzz Zzzzz Zzzz Zzzzzzzz Einwohner
+Zzzz Zzzzzzzzzzzz Zzzzzzzzzzzzzzzzz und Zzzz Zzzzzz Zzzzzzzzz Zzzzzzzz
+Zzzzzzzz.
+Zzzzzzz und Zzzzzz
+Zzz Zzzzz Zzzzzz Zzzzzzzzzzzzzzz Zzzzz Zzzzz Zzzz Zzzz Zzzzzzz Zzzzzzzzz:
+Zzz Zzzzz Zzzz Zzzzz Zzzzzzzzzz, Zzzz Zzz Zzzz Zzzzzzzzzzz Zzzzzzzzzz Zzz
+Zzzzzzz Zzzzzz. Zzz Zzzzzzz Zzz Zzzz Zzzzzzzzzzzzz Zzzzzzzzzzz Zzzzzzz
+Zzz Zzzzzzzzz Zzzzzz Zzzzzzz Zzzz Zzzzzzzzzzzzzzzzz. Zzzzzz Zzzz-
+Zzzz Zzzzzzz Zzzzzzzzzzz, Zzzz Zzzz Zzzzzzzzzzz Zzzz Zzzzzzzzzzz Zzzzzz
+Zzzzzzz.
+Zzzzzzzz Zzzzzzzzzz Zzzz Zzzzzzzzz Zzzzzzzzz Zzzz Zzzzzz Zzzz Zzzz-
+Zzzzzzzz, Zzzzzzzzzzz Zzzz Landes und Zzzzzzzzzzzzzzzz Zzzzzzzz Zzzz
+Zzzzzzzzzzzzz Zzzzzzz. Zzzzzzz Zzzzzz Zzz Zzzz Zzzz Zzzzzzzzzzzzzzz
+Zzzzzzzzzzzzzz Zzzzzzz Zzzzzzzzz, Zzzzzzz Zzzzzzz Zzzzzz Zzzz Zzzz
+Zzzzzzzzzzz Zzzzzzzz Zzzzz Zzzzzz Zzzzzzzzzz Herrschaftsgott.
 ",@"
-Heilung
-Im Laufe der Abenteuer, die ein Splitterträger in Lorakis erlebt,
-muss er sich vielen Gefahren stellen und wird sicherlich nicht
-ewig ohne Verletzungen davonkommen. Um weiter ausziehen zu
-können, benötigt er daher die Hilfe kompetenter Heiler.
-Möglichkeiten
-Die verbreitetste Möglichkeit, Wunden, Vergiftungen oder Krank-
-heiten zu versorgen, ist die Heilkunde (S. 119). Auch die Magie-
-schule Heilungsmagie (S. 207) ist weit verbreitet und hoch angese-
-hen. Zahlreiche Alchemisten (S. 103) kennen viele Mittel, gerade
-zur Bekämpfung von Giften, und auch mit Naturkunde gesam-
-melte Heilkräuter (S. 125) können in vielen Fällen weiterhelfen.
-Tiere und andere Wesen behandeln
-Die in diesem Kapitel genannten Schwierigkeiten
-gelten für die Behandlung von Wesen aus den fünf
-Spielerrassen. Bei anderen Lebewesen (Tieren, an-
-deren Rassen, Monstren) ist die Schwierigkeit um 5
-(weit verbreitete Kreaturen) oder um 10 (seltene Kre-
-aturen, Feenwesen) erhöht.
-Heilung von Schaden
-Das grundlegende Anwendungsgebiet der Heilkunde ist die Hei-
-lung von erlittenem Schaden, ob dieser nun durch Verletzungen,
-Vergiftungen, Zauberei oder andere Ursachen entstanden ist.
-Heilkunde ist keine Zauberei: Sie bringt einen Patienten nicht
-auf wundersame Weise wieder auf die Beine, hilft ihm aber, sich
-schneller von Wunden zu erholen.
-Probe: Einfache Heilkunde-Probe, die Schwierigkeit beträgt 20
-zuzüglich des negativen Modifikators der Gesundheitsstufe, auf
-der sich der Abenteurer befindet (also 20 bei Unverletzt, 21 bei
-Angeschlagen, 28 bei Todgeweiht etc.).
-Pro Tag und Patient darf nur eine einzige Probe abgelegt werden.
-Die Probe nimmt 5 Minuten in Anspruch.
+Zzzzzzzz
+Zzz Zzzzzz Zzzz Zzzzzzzzzz, Zzzz Zzzz Zzzzzzzzzzzzzzz Zzz Zzzzzzzz Zzzzzzz,
+Zzzzz Zzz Zzzzz Zzzzzzz Zzzzzzzzz Zzzzzzzz und Zzzzz Zzzzzzzzzzz Zzzzzz
+Zzzzz Zzzzz Zzzzzzzzzzzzz Zzzzzzzzzzzz. Zzz Zzzzzzz Zzzzzzzzzz Zzz
+Zzzzzzz, Zzzzzzzzz Zzz Zzzzzz Zzzz Zzzzzz Zzzzzzzzzzzz Zzzzzzz.
+Zzzzzzzzzzzzzz
+Zzzz Zzzzzzzzzzzzzz Zzzzzzzzzzzz, Zzzzzzz, Zzzzzzzzzzzzz Zzzzz Zzzzzz-
+Zzzzzzz Zzz Zzzzzzzzzz, Zzzz Zzzz Zzzzzzzzzz (Zz. 000). Zzzzz Zzzz Zzzzzz-
+Zzzzzzz Zzzzzzzzzzzzzz (Zz. 000) Zzzz Zzzzz Zzzzzzzzzzz und Zzzzz Zzzzzzz-
+Zzzz. Zzzzzzzzzzz Zzzzzzzzzzzz (Zz. 000) Zzzzzzz Zzzzzz Zzzzzzz, Zzzzzzz
+Zzzz Zzzzzzzzzzz Zzzz Zzzzzzz, und Zzzzz Zzzz Zzzzzzzzzzz Zzzzzz-
+Zzzzzz Zzzzzzzzzzzz (Zz. 000) Zzzzzzz Zzz Zzzzzzz Zzzzzzz Zzzzzzzzzzzzz.
+Zzzzzz und Zzzzzzz Zzzzzz Zzzzzzzzzz
+Zzzz Zzz Zzzzzzz Zzzzzzzz Zzzzzzzzzz Zzzzzzzzzzzzzzzz
+Zzzzzzz Zzzz Zzzz Zzzzzzzzzzz Zzzz Zzzzzz Zzzz Zzzz Zzzzz
+Zzzzzzzzzzzzzz. Zzzz Zzzzzzzz Zzzzzzzzzz (Zzzzzzz, Zzz-
+Zzzzzz Zzzzzzz, Zzzzzzzzz) Zzzz Zzzz Zzzzzzzzzzzzzz Zzz 0
+(Zzzzz Zzzzzzzzzzzz Zzzzzzzzzz) Zzzzz Zzz 00 (Zzzzzzzz Zzzz-
+Zzzzzzz, Zzzzzzzzzz) Zzzzzzz.
+Zzzzzzzz Zzzz Zzzzzzzz
+Zzzz Zzzzzzzzzzzzz Zzzzzzzzzzzzzzzzz Zzzz Zzzzzzzzzz Zzzz Zzzz Zzzz-
+Zzzzz Zzzz Zzzzzzzzzzz Zzzzzzzz, Zzz Zzzzzzz Zzzz Zzzzzz Zzzzzzzzzzzzz,
+Zzzzzzzzzzzzz, Zzzzzzzzz Zzzzz Zzzzzzz Zzzzzzzzz Zzzzzzzzzzz Zzzz.
+Zzzzzzzzzz Zzzz Zzzzzz Zzzzzzzzz: Zzzz Zzzzzzz Zzzzzz Zzzzzzzzzz Zzzzzz
+Zzzz Zzzzzzzzzzz Zzzzzz Zzzzzzz Zzzz Zzzz Zzzzzz, Zzzzzz Zzzz Zzzzz, Zzzzz
+Zzzzzzzzzz Zzzz Zzzzzzz Zzz Zzzzzzzz.
+Probe: Zzzzzzzzz Zzzzzzzzzz-Probe, Zzzz Zzzzzzzzzzzzzz Zzzzzzzz 00
+Zzzzzzzzzz Zzzz Zzzzzzzzzz Zzzzzzzzzzzzz Zzzz Zzzzzzzzzzzzzzzzz, Zzzz
+Zzzz Zzzzz Zzzz Zzzzzzzzzzz Zzzzzzzzz (Zzzzz 00 Zzzz Zzzzzzzzzzz, 00 Zzzz
+Zzzzzzzzzzzzz, 00 Zzzz Zzzzzzzzzzz Zzzz.).
+Zzzz Zzzz und Zzzzzzzz Zzzzz Zzzz Zzzzz Zzzzzzzz Probe Zzzzzzzzz Zzzzzzz.
+Zzzz Probe Zzzzzz 0 Zzzzzzzz Zzz Zzzzzzzzz.
 Auswirkungen
-Verheerend: Dem Heiler unterläuft ein grobes Missgeschick und
-die Heilung misslingt. Zusätzlich erhält der Patient 5 Schadens-
-punkte +1 pro negativem Erfolgsgrad.
-Misslungen: Die Heilung misslingt und der Patient erhält 1
-Schadenspunkt pro negativem Erfolgsgrad.
-Knapp misslungen: Der Abenteurer begeht einen Fehler und
-die Heilung misslingt. Die Probe zählt aber nicht für die Anzahl
-der erlaubten Proben pro Tag.
-Gelungen: Die Wunde des Patienten wird kompetent versorgt.
-Die Heilung während der nächsten Ruhephase erhöht sich um 1
-Punkt +1 pro Erfolgsgrad.
-Herausragend: Zusätzlich zum Effekt einer gelungenen Heilung
-erhält der Patient auf der Stelle 1 Lebenspunkt zurück.
+Verheerend: Zzzz Zzzzzzz Zzzzzzzzzzz Zzzz Zzzzzzz Zzzzzzzzzzzzz und
+Zzzz Zzzzzzzz Zzzzzzzzzz. Zzzzzzzzzzz Zzzzzzz Zzzz Zzzzzzzz 0 Zzzzzzzzz-
+Zzzzzzz +0 Zzzz Zzzzzzzzzz Zzzzzzzzzzzz.
+Misslungen: Zzzz Zzzzzzzz Zzzzzzzzzz und Zzzz Zzzzzzzz Zzzzzzz 0
+Zzzzzzzzzzzzzz Zzzz Zzzzzzzzzz Zzzzzzzzzzzz.
+Zzzzzz misslungen: Zzzz Zzzzzzzzzzz Zzzzzzz Zzzzzz Zzzzzzz und
+Zzzz Zzzzzzzz Zzzzzzzzzz. Zzzz Probe Zzzzzz Zzzzz Zzzzzz Zzzz Zzzz Zzzzzzz
+Zzzz Zzzzzzzzzz Proben Zzzz Zzzz.
+Gelungen: Zzzz Zzzzzz Zzzz Zzzzzzzzzz Zzzzz Zzzzzzzzzz Zzzzzzzzz.
+Zzzz Zzzzzzzz Zzzzzzzz Zzzz Zzzzzzzzz Zzzzzzzzzz Zzzzzzz Zzzzz Zzz 0
+Zzzzzz +0 Zzzz Zzzzzzzzzzzz.
+Herausragend: Zzzzzzzzzzz Zzzz Zzzzzzz Zzzzzz gelungenen Zzzzzzzz
+Zzzzzzz Zzzz Zzzzzzzz Zzzz Zzzz Zzzzzzz 0 Zzzzzzzzzzzz Zzzzzzz.
 Ausrüstung und Umstände
-Besonders saubere Umgebung (leicht positiv), verschmutzte Um-
-gebung (leicht bis stark negativ), keine Ausrüstung vorhanden
-(leicht bis stark negativ)
-Heilung der Zustände
-Blutend, Sterbend und Verwundet
-Bestimmte schwere Verletzungen oder andere Ursachen bewir-
-ken körperliche Zustände (S. 168) bei einem Abenteurer, die
-möglichst rasch behandelt werden sollten. Diese Zustände sind
-Blutend (stetiger Verlust von Lebenspunkten), Verwundet (eine
-schmerzhafte Verletzung, etwa ein gebrochenes Bein) und der
-Zustand Sterbend.
-Probe: Einfache Heilkunde-Probe, die Schwierigkeit beträgt 20
-zuzüglich der höchsten Stufe eines der drei Zustände Blutend,
-Sterbend oder Verwundet, an denen der Abenteurer leidet. Es
-spielt keine Rolle, welcher Zustand behoben werden soll, die
-Schwierigkeit orientiert sich immer an der höchsten Stufe eines
-der drei Zustände.
-Pro Zustand des Patienten darf nur eine einzige Probe pro Tag
-abgelegt werden, die auch nur für diesen Zustand gilt. Die Pro-
-be nimmt 5 Minuten in Anspruch. Sobald ein Heilungsversuch
-gestartet wurde, wird der Zustand für die Zeit des Heilungsver-
-suchs ausgesetzt.
-Hat der Zustand eine bestimmte Ursache (siehe S. 168), muss
-zunächst die Ursache beseitigt werden, bevor der Zustand geheilt
-werden kann.
+Zzzzzzzzzz Zzzzzzzz Zzzzzzzzz (Zzzzzzz Zzzzzzzz), Zzzzzzzzzzzzz Zzz-
+Zzzzzzz (Zzzzzzz Zzzz Zzzzzz Zzzzzzzz), Zzzzzz Ausrüstung Zzzzzzzzzz
+(Zzzzzzz Zzzz Zzzzzz Zzzzzzzz)
+Zzzzzzzz Zzzz Zzzzzzzzz
+Zzzzzzzz, Zzzzzzzzz und Zzzzzzzzzz
+Zzzzzzzzzz Zzzzzzzz Zzzzzzzzzzzzz Zzzzz Zzzzzzz Zzzzzzzzz Zzzzzz-
+Zzzz Zzzzzzzzzzzz Zzzzzzzzz (Zz. 000) Zzzz Zzzzzz Zzzzzzzzzzz, Zzzz
+Zzzzzzzzzz Zzzzzz Zzzzzzzzzz Zzzzzzz Zzzzzzzz. Zzzzzz Zzzzzzzzz Zzzzz
+Zzzzzzzz (Zzzzzzzzz Zzzzzzzz Zzzz Zzzzzzzzzzzzzz), Zzzzzzzzzz (Zzzzz
+Zzzzzzzzzzzzz Zzzzzzzzzzz, Zzzzz Zzzz Zzzzzzzzzzzz Zzzzz) und Zzzz
+Zzzzzzzz Zzzzzzzzz.
+Probe: Zzzzzzzzz Zzzzzzzzzz-Probe, Zzzz Zzzzzzzzzzzzzz Zzzzzzzz 00
+Zzzzzzzzzz Zzzz Zzzzzzzzz Zzzzzz Zzzzzz Zzzz Zzzzz Zzzzzzzzz Zzzzzzzz,
+Zzzzzzzzz Zzzzz Zzzzzzzzzz, Zzz Zzzzzz Zzzz Zzzzzzzzzzz Zzzzzzz. Zzz
+Zzzzzzz Zzzzzz Zzzzzz, Zzzzzzzz Zzzzzzzz Zzzzzzzz Zzzzzzz Zzzzz, Zzzz
+Zzzzzzzzzzzzzz Zzzzzzzzzzz Zzzzz Zzzzzz Zzz Zzzz Zzzzzzzzz Zzzzzz Zzzzzz
+Zzzz Zzzzz Zzzzzzzzz.
+Zzzz Zzzzzzzz Zzzz Zzzzzzzzzz Zzzzz Zzzz Zzzzz Zzzzzzzz Probe Zzzz Zzzz
+Zzzzzzzzz Zzzzzzz, Zzzz Zzzzz Zzzz Zzzz Zzzzzzz Zzzzzzzz Zzzzz. Zzzz Zzzz-
+Zzz Zzzzzz 0 Zzzzzzzz Zzz Zzzzzzzzz. Zzzzzzz Zzzz Zzzzzzzzzzzzzzzz
+Zzzzzzzzzz Zzzzzz, Zzzzz Zzzz Zzzzzzzz Zzzz Zzzz Zzzzz Zzzz Zzzzzzzzzzzz-
+Zzzzzz Zzzzzzzzzzz.
+Zzzz Zzzz Zzzzzzzz Zzzzz Zzzzzzzzzz Zzzzzzzz (Zzzzzz Zz. 000), Zzzzz
+Zzzzzzzzz Zzzz Zzzzzzzz Zzzzzzzzzz Zzzzzzz, Zzzzzz Zzzz Zzzzzzzz Zzzzzzzz
+Zzzzzzz Zzzzz.
 Auswirkungen
-Verheerend: Dem Heiler unterläuft ein grobes Missgeschick und
-die Heilung misslingt. Zusätzlich erhält der Patient 5 Schadens-
-punkte und 1 weiteren pro negativem Erfolgsgrad.
-Misslungen: Die Heilung misslingt und der Patient erhält 1
-Schadenspunkt pro negativem Erfolgsgrad.
-Knapp misslungen: Der Abenteurer begeht einen Fehler und
-die Heilung misslingt. Die Probe zählt aber nicht für die Anzahl
-der erlaubten Proben pro Tag.
-Gelungen: Der Zustand sinkt um 1 Stufe (+1 pro 2 Erfolgsgra-
-de). Sollte der Patient beim Zustand Sterbend keine Lebenspunk-
-te mehr gehabt haben, erhält er 1 Lebenspunkt in der untersten
-Gesundheitsstufe.
-Herausragend: Zusätzlich zum Effekt einer gelungenen Heilung
-erhält der Patient auf der Stelle 1W6 Lebenspunkte zurück.
+Verheerend: Zzzz Zzzzzzz Zzzzzzzzzzz Zzzz Zzzzzzz Zzzzzzzzzzzzz und
+Zzzz Zzzzzzzz Zzzzzzzzzz. Zzzzzzzzzzz Zzzzzzz Zzzz Zzzzzzzz 0 Zzzzzzzzz-
+Zzzzzzz und 0 Zzzzzzzzz Zzzz Zzzzzzzzzz Zzzzzzzzzzzz.
+Misslungen: Zzzz Zzzzzzzz Zzzzzzzzzz und Zzzz Zzzzzzzz Zzzzzzz 0
+Zzzzzzzzzzzzzz Zzzz Zzzzzzzzzz Zzzzzzzzzzzz.
+Zzzzzz misslungen: Zzzz Zzzzzzzzzzz Zzzzzzz Zzzzzz Zzzzzzz und
+Zzzz Zzzzzzzz Zzzzzzzzzz. Zzzz Probe Zzzzzz Zzzzz Zzzzzz Zzzz Zzzz Zzzzzzz
+Zzzz Zzzzzzzzzz Proben Zzzz Zzzz.
+Gelungen: Zzzz Zzzzzzzz Zzzzzz Zzz 0 Zzzzzz (+0 Zzzz 0 Zzzzzzzzzzz-
+Zzz). Zzzzzzz Zzzz Zzzzzzzz Zzzzz Zzzzzzzz Zzzzzzzzz Zzzzzz Zzzzzzzzzzz-
+Zzz Zzzzz Zzzzzzz Zzzzzz, Zzzzzzz Zzz 0 Zzzzzzzzzzzz Zzz Zzzz Zzzzzzzzzz
+Zzzzzzzzzzzzzzzzz.
+Herausragend: Zzzzzzzzzzz Zzzz Zzzzzzz Zzzzzz gelungenen Zzzzzzzz
+Zzzzzzz Zzzz Zzzzzzzz Zzzz Zzzz Zzzzzzz 0W0 Zzzzzzzzzzzzz Zzzzzzz.
 Ausrüstung und Umstände
-Besonders saubere Umgebung (leicht positiv), verschmutzte Um-
-gebung (leicht bis stark negativ), keine Ausrüstung vorhanden
-(leicht bis stark negativ)",
+Zzzzzzzzzz Zzzzzzzz Zzzzzzzzz (Zzzzzzz Zzzzzzzz), Zzzzzzzzzzzzz Zzz-
+Zzzzzzz (Zzzzzzz Zzzz Zzzzzz Zzzzzzzz), Zzzzzz Ausrüstung Zzzzzzzzzz
+(Zzzzzzz Zzzz Zzzzzz Zzzzzzzz)",
         @"
-Landschaft: Halbinsel entlang des Gebirgsrückens der Ven-
-tellen, Aylische Ebene, verkarstete Hügelländer
-Klima: mediterran; warme Sommer und stürmische, milde
-Winter
-Flora und Fauna: nur wenige Wildtiere und -pflanzen in
-unangetasteten Wäldern
-Handel und Verkehr: eine der wichtigsten Handelsmächte
-der Drei Meere mit großen Handels- und Kriegsflotten;
-Metallwaren aus Eisenbrann, gnomische Mechaniken aus
-Talaberis, Weizen aus der Aylanthischen Ebene
-Bevölkerung: 2,1 Millionen; je nach Stadt stark wechselnde
-Anteile der verschiedenen Rassen, jedoch überall Men-
-schen als stärkste Gruppe
-Städte und Dörfer: Talaberis (57.000
-Einwohner), Aylantha (82.000),
-Gondalis (52.000), Nuum (49.000),
-Drevilna (125.000), Fulnia (44.000),
-Aurigion (31.000), Taupio (38.000),
-Eisenbrann (62.000), dazu viele klei-
-ne Dörfer im Umland der Metropolen.
-Herrschaft: autonome Stadtstaaten, die
-sich im Rat der Stadtherren absprechen
-Wappen: neunzackiger goldener Stern auf Blau
-Religion: bunt gemischt; allgemein anerkannt ist Ulmon
-der Bundesherr als Schutzgott des Städtebunds
-Allgemeine Stimmung: lebenslustig und geschäftig, aber
-starkes soziales Gefälle
+Landschaft: Zzzzzzzzzz Zzzzzzzz Zzzz Zzzzzzzzzzzzzzz Zzzz Zzzz-
+Zzzzzzz, Zzzzzzzzz Zzzzzz, Zzzzzzzzzzzz Zzzzzzzzzzzz
+Klima: Zzzzzzzzzzz; Zzzzzz Zzzzzzz und Zzzzzzzzzzz, Zzzzzz
+Zzzzzzz
+Flora und Fauna: Zzzz Zzzzzzz Zzzzzzzzzz und -Zzzzzzzzz Zzz
+Zzzzzzzzzzzzzzz Zzzzzzzz
+Handel und Verkehr: Zzzzz Zzzz Zzzzzzzzzzzz Handelsmächte
+Zzzz Zzzzz Zzzzzz Zzzz Zzzzzzz Handels- und Zzzzzzzzzzzzzz;
+Zzzzzzzzzzzz Zzzz Zzzzzzzzzzz, Zzzzzzzzzz Zzzzzzzzzzz Zzzz
+Zzzzzzzzzz, Zzzzzzz Zzzz Zzzz Zzzzzzzzzzzzzz Zzzzzz
+Bevölkerung: 0,0 Zzzzzzzzzz; Zzz Zzzzz Zzzzzz Zzzzzz Zzzzzzzzzzz
+Zzzzzzzz Zzzz Zzzzzzzzzzzzzz Zzzzzzz, Zzzzzzz Zzzzzzzz Zzzz-
+Zzzzzz Zzzz Zzzzzzzzz Zzzzzzz
+Städte und Dörfer: Zzzzzzzzzz (00.000
+Einwohner), Zzzzzzzzz (00.000),
+Zzzzzzzzz (00.000), Zzzzz (00.000),
+Zzzzzzzzz (000.000), Zzzzzzz (00.000),
+Zzzzzzzzz (00.000), Zzzzzzz (00.000),
+Zzzzzzzzzzz (00.000), Zzzzz Zzzzzz Zzzzz-
+Zzz Dörfer Zzz Zzzzzzz Zzzz Zzzzzzzzzzz.
+Herrschaft: Zzzzzzzzz Zzzzzzzzzzzzz, Zzzz
+Zzzzz Zzz Zzzz Zzzz Zzzzzzzzzzzz Zzzzzzzzzzz
+Wappen: Zzzzzzzzzzzzz Zzzzzzzzz Zzzzzz Zzzz Zzzzz
+Religion: Zzzzz Zzzzzzzzz; Zzzzzzzzzz Zzzzzzzzzz Zzzz Zzzzzz
+Zzzz Zzzzzzzzzzz Zzzz Zzzzzzzzzzz Zzzz Zzzzzzzzzzzz
+Allgemeine Zzzzzzzzz: Zzzzzzzzzzzzz und Zzzzzzzzzzz, Zzzzz
+Zzzzzzzz Zzzzzzzzz Zzzzzzzz
 "
     };
 
