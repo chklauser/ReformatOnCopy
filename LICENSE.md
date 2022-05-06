@@ -16,6 +16,9 @@
 > FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, 
 > ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
+# [CommandLineArgsGenerator](https://github.com/xb-bx/CommandLineArgsGenerator) (by [xb-bx](https://github.com/xb-bx))
+(unknown license)
+
 # SharpClipboard
 The clipboard interception code (file `SharpClipboard.cs`) is based on the code from the following project: [SharpClipboard](https://github.com/Willy-Kimura/SharpClipboard),
 licensed under the MIT license. The code has been substantially rewritten to 

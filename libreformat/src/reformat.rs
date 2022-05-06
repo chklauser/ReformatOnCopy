@@ -2,6 +2,18 @@ use std::fmt::Write;
 use lazy_regex::regex;
 use regex::Match;
 
+/// FFI wrapper around the `reformat_rs` function. Takes a UTF-8 encoded string in `input_buf`, of
+/// length `input_len`, and writes the reformatted string to `output_buf` as UTF-8.
+/// The output buffer must have a capacity (`output_capacity`) of at least 1.5× the input length.
+///
+/// The return value contains the number of UTF-8 bytes written to the output buffer or a negative
+/// number if an error occurred.
+///
+/// Assumptions:
+///  - input_buf and output_buf do not alias
+///  - input_buf is at least input_len bytes long
+///  - output_buf is at least output_capacity long
+///  - input_buf[0..input_len] is a valid UTF-8 string
 #[no_mangle]
 pub unsafe extern fn reformat(input_buf: *const u8, input_len: usize, output_buf: *mut u8, output_capacity: usize) -> isize {
     let input = std::str::from_utf8_unchecked(std::slice::from_raw_parts(input_buf, input_len));
@@ -72,6 +84,7 @@ pub fn reformat_rs<I, W>(input: &str, output: I) -> std::fmt::Result where W: Wr
     Ok(())
 }
 
+/// Copy `input` to `output` skipping over any occurrences of the character `skip`.
 fn write_skipping_char<W>(output: &mut W, skip: char, input: &str) -> std::fmt::Result where W: Write {
     let mut copied_up_to = 0usize;
     while copied_up_to < input.len() {
@@ -82,6 +95,7 @@ fn write_skipping_char<W>(output: &mut W, skip: char, input: &str) -> std::fmt::
     Ok(())
 }
 
+/// Copy `opt_match` to `output` if it is not empty.
 fn copy_optional_match<W>(mut output: W, opt_match: &Option<Match>) -> std::fmt::Result where W: Write {
     opt_match.map(|m| output.write_str(m.as_str())).unwrap_or(Ok(()))
 }
@@ -99,6 +113,11 @@ fn contains_more_than_one_line_break(input: &str) -> bool {
     false
 }
 
+/// Implements the `Write` trait for a mutable, fixed size byte buffer.
+/// Returns an error if the buffer is full.
+// NOTE: I'm a bit surprised that something like this is not part of the standard library.
+// If there is an implementation in std, I'd love to use it, but it would have to provide
+// the number of bytes written to the buffer.
 struct WriteToFixedUtf8Buf<'a> {
     buf: &'a mut [u8],
     pos: usize,

@@ -10,24 +10,49 @@ using JetBrains.Annotations;
 
 namespace ReformatOnCopy;
 
+/// <summary>
+/// Indicates, which regular expressions should be compiled (using <see cref="RegexOptions.Compiled"/>).
+/// </summary>
 [Flags]
 public enum ReformatRegexMode
 {
     NoneCompiled = 0,
+    /// <summary>
+    /// Compile the regular expression that detects whether the current line starts with any of the headings.
+    /// </summary>
     AggregateHeadingsCompiled = 2,
+    /// <summary>
+    /// Compile the individual heading regular expressions that get used to detect _which_ heading the current line starts with.
+    /// (After the aggregate expression has already detected _some_ heading)
+    /// </summary>
     IndividualHeadingsCompiled = 4,
     AllCompiled = AggregateHeadingsCompiled | IndividualHeadingsCompiled
 }
 
+/// <summary>
+/// Indicates which transformation passes should be applied to the input.
+/// </summary>
 [Flags]
 public enum ReformatPasses
 {
     None = 0,
+    /// <summary>
+    /// Removes unnecessary line breaks.
+    /// </summary>
     UnnecessaryLineBreaks = 1,
+    /// <summary>
+    /// Detects headings and formats them for Markdown. Uses <see cref="HeadingPattern"/>s.
+    /// </summary>
     DetectHeadings = 2,
     All = UnnecessaryLineBreaks | DetectHeadings
 }
 
+/// <summary>
+/// A heading pattern is matched against the beginning of each line (after removing unnecessary line breaks).
+/// </summary>
+/// <param name="Pattern">The regular expression that detects the heading. Must not include <c>^</c> or <c>$</c>.</param>
+/// <param name="Replacement">The replacement pattern for the heading. Use <c>$0</c> to refer to the matched heading. Use <c>${named}</c> capture groups instead of indexed capture groups beyond <c>$0</c>.</param>
+/// <param name="ExpectColon">Whether to expect <c>":\s"</c> after the heading pattern. Defaults to <c>true</c>.</param>
 public record HeadingPattern([RegexPattern] string Pattern, string Replacement, bool ExpectColon = true);
 
 public class Reformatter
@@ -41,9 +66,6 @@ public class Reformatter
 
     private readonly Regex? aggregateHeadingPattern;
     private readonly ImmutableList<(HeadingPattern Pattern, Regex CachedRegex)> headingPatterns;
-
-    [DllImport("libreformat", EntryPoint = "reformat", ExactSpelling = true)]
-    static extern unsafe nint reformat(byte* inputBuf, int inputLen, byte* outputBuf, int outputCapacity);
 
     public Reformatter(
         IEnumerable<HeadingPattern> headingPatterns,
@@ -67,7 +89,7 @@ public class Reformatter
         }
         else
         {
-            this.aggregateHeadingPattern = null;
+            aggregateHeadingPattern = null;
         }
     }
 
@@ -122,6 +144,7 @@ public class Reformatter
 
     private string removeLineBreaksViaRust(string input)
     {
+        // Encode input as UTF-8 into the input buffer 
         var inputBuf = pool.Rent(Encoding.UTF8.GetMaxByteCount(input.Length));
         var effectiveUtf8ByteCount = encoder.GetBytes(input.AsSpan(), inputBuf.AsSpan(), true);
         // Output can be at most 1.5 times the input size (and only in terms of ASCII characters)
@@ -148,7 +171,19 @@ public class Reformatter
         pool.Return(outputBuf);
         return output;
     }
-
+    
+    /// <summary>
+    /// Rust implementation of the line break  removal. The regular expression used to detect line breaks is not very
+    /// fast using the .NET regular expression implementation. The rust regex crate is roughly 1000× faster.
+    /// </summary>
+    /// <param name="inputBuf">Pointer to a buffer containing the UTF-8 encoded input string of length <paramref name="inputLen"/>. No terminating zero byte required. The allocated buffer may of course be larger than <paramref name="inputLen"/>.</param>
+    /// <param name="inputLen">The length of the UTF-8 encoded input string, in bytes.</param>
+    /// <param name="outputBuf">Pointer to the buffer that the function will write its output to. Must not alias <paramref name="inputBuf"/>! Must be at least 1.5 as large as <paramref name="inputLen"/>. Contents of the output buffer are never read.</param>
+    /// <param name="outputCapacity">The length of the <paramref name="outputBuf"/>.</param>
+    /// <returns>If >= 0, the number of UTF-8 encoded bytes written to the <paramref name="outputBuf"/>. If &lt; 0, an error has occurred</returns>
+    [DllImport("libreformat", EntryPoint = "reformat", ExactSpelling = true)]
+    static extern unsafe nint reformat(byte* inputBuf, int inputLen, byte* outputBuf, int outputCapacity);
+    
     private bool enabled(ReformatPasses pass)
     {
         return (passes & pass) == pass;

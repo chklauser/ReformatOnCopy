@@ -45,6 +45,9 @@ public static class Program
     private static void runInterceptorInBackground(string[] program, string[] ignore)
     {
         var reFormatter = new Reformatter(Splittermond.Headings);
+        
+        // The clipboard monitor needs to run in an STA thread because it maintains a hidden window that
+        // receives clipboard events.
         var pump = new Thread(() =>
         {
             bool isSelf(string? programName) =>
@@ -61,6 +64,11 @@ public static class Program
             string? lastOutput = null;
             monitor.ClipboardChanged += (_, e) =>
             {
+                // When we send the re-formatted text to the clipboard, windows will broadcast another
+                // "clipboard changed" event. We need to ignore that event to avoid an infinite loop.
+                // Unfortunately, the "program name" is only a heuristic. If the user switches programs quickly,
+                // we might receive our own clipboard changed event under a different program name. To avoid that,
+                // we also check that the clipboard content is not what we just re-formatted.
                 if (isSelf(e.ProgramName) || e.Text == lastOutput)
                 {
                     return;
@@ -69,7 +77,7 @@ public static class Program
                 lastOutput = intercept(e, reFormatter, program);
             };
             Application.Run(monitor);
-        }) { IsBackground = true, Name = "pump" };
+        }) { IsBackground = true, Name = "pump" }; // background means that the thread will shut down when the app exits
         pump.SetApartmentState(ApartmentState.STA);
         pump.Start();
     }
@@ -80,6 +88,7 @@ public static class Program
         string[] program
     )
     {
+        // Check whether the clipboard change came from one of the programs that we are monitoring.
         var programName = e.ProgramName;
         if (programName == null || !program.Any(name => programName.Contains(name, StringComparison.OrdinalIgnoreCase)))
         {
@@ -88,10 +97,14 @@ public static class Program
             return null;
         }
 
+        // Re-format
         var numBreaksBefore = e.Text.Count(c => c == '\n');
         var reformatted = reFormatter.Reformat(e.Text);
         var numBreaksAfter = reformatted.Count(c => c == '\n');
+        
+        // Replace clipboard content with the re-formatted version
         Clipboard.SetText(reformatted);
+        
         Console.WriteLine(
             $"re-formatted text copied from {programName} (line breaks {numBreaksBefore} -> {numBreaksAfter})");
         return reformatted;
