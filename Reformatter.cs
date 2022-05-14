@@ -152,23 +152,29 @@ public class Reformatter
             (effectiveUtf8ByteCount % 2 == 0 ? 0 : 1));
 
         string output;
-        unsafe
+        try
         {
-            fixed (byte* inputPtr = inputBuf)
-            fixed (byte* outputPtr = outputBuf)
+            unsafe
             {
-                var result = reformat(inputPtr, effectiveUtf8ByteCount, outputPtr, outputBuf.Length);
-                if (result < 0)
+                fixed (byte* inputPtr = inputBuf)
+                fixed (byte* outputPtr = outputBuf)
                 {
-                    throw new("Error during line break detection. Error code: " + result);
-                }
+                    var result = reformat(inputPtr, effectiveUtf8ByteCount, outputPtr, outputBuf.Length);
+                    if (result < 0)
+                    {
+                        throw new("Error during line break detection. Error code: " + result);
+                    }
 
-                output = new((sbyte*)outputPtr, 0, (int)result, Encoding.UTF8);
+                    output = new((sbyte*)outputPtr, 0, (int)result, Encoding.UTF8);
+                }
             }
         }
-
-        pool.Return(inputBuf);
-        pool.Return(outputBuf);
+        finally
+        {
+            pool.Return(inputBuf);
+            pool.Return(outputBuf);
+        }
+        
         return output;
     }
     
