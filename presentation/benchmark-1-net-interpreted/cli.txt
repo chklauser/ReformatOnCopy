@@ -1,0 +1,548 @@
+﻿// Validating benchmarks:
+// ***** BenchmarkRunner: Start   *****
+// ***** Found 6 benchmark(s) in total *****
+// ***** Building 1 exe(s) in Parallel: Start   *****
+// start dotnet restore  /p:UseSharedCompilation=false /p:BuildInParallel=false /m:1 /p:Deterministic=true /p:Optimize=true in C:\Users\chris\RiderProjects\ReformatOnCopy\benchmark\bin\Release\net6.0-windows\ac65b98f-7b60-485f-85bc-bbedd5918b76
+// command took 1.71s and exited with 0
+// start dotnet build -c Release  --no-restore /p:UseSharedCompilation=false /p:BuildInParallel=false /m:1 /p:Deterministic=true /p:Optimize=true in C:\Users\chris\RiderProjects\ReformatOnCopy\benchmark\bin\Release\net6.0-windows\ac65b98f-7b60-485f-85bc-bbedd5918b76
+// command took 2.83s and exited with 0
+// ***** Done, took 00:00:04 (4.7 sec)   *****
+// Found 6 benchmarks:
+//   ReformatterBenchmarks.ReformatInterpreted: DefaultJob [Text=ProsePage]
+//   ReformatterBenchmarks.ReformatCompiled: DefaultJob [Text=ProsePage]
+//   ReformatterBenchmarks.ReformatInterpreted: DefaultJob [Text=HeadingsHeavyPage]
+//   ReformatterBenchmarks.ReformatCompiled: DefaultJob [Text=HeadingsHeavyPage]
+//   ReformatterBenchmarks.ReformatInterpreted: DefaultJob [Text=HeadingsHeavySnippet]
+//   ReformatterBenchmarks.ReformatCompiled: DefaultJob [Text=HeadingsHeavySnippet]
+
+// **************************
+// Benchmark: ReformatterBenchmarks.ReformatInterpreted: DefaultJob [Text=ProsePage]
+// *** Execute ***
+// Launch: 1 / 1
+// Execute: dotnet "ac65b98f-7b60-485f-85bc-bbedd5918b76.dll" --benchmarkName "benchmark.ReformatterBenchmarks.ReformatInterpreted(Text: ProsePage)" --job "Default" --benchmarkId 0 in C:\Users\chris\RiderProjects\ReformatOnCopy\benchmark\bin\Release\net6.0-windows\ac65b98f-7b60-485f-85bc-bbedd5918b76\bin\Release\net6.0-Windows7.0
+// BeforeAnythingElse
+
+// Benchmark Process Environment Information:
+// Runtime=.NET 6.0.4 (6.0.422.16404), X64 RyuJIT
+// GC=Concurrent Workstation
+// Job: DefaultJob
+
+OverheadJitting  1: 1 op, 235600.00 ns, 235.6000 us/op
+WorkloadJitting  1: 1 op, 13244301200.00 ns, 13.2443 s/op
+
+WorkloadWarmup   1: 1 op, 12937392100.00 ns, 12.9374 s/op
+WorkloadWarmup   2: 1 op, 12930565800.00 ns, 12.9306 s/op
+WorkloadWarmup   3: 1 op, 12958605600.00 ns, 12.9586 s/op
+WorkloadWarmup   4: 1 op, 12974921400.00 ns, 12.9749 s/op
+WorkloadWarmup   5: 1 op, 12968354100.00 ns, 12.9684 s/op
+WorkloadWarmup   6: 1 op, 12932331100.00 ns, 12.9323 s/op
+WorkloadWarmup   7: 1 op, 12908763200.00 ns, 12.9088 s/op
+WorkloadWarmup   8: 1 op, 12958110400.00 ns, 12.9581 s/op
+WorkloadWarmup   9: 1 op, 12950155800.00 ns, 12.9502 s/op
+
+// BeforeActualRun
+WorkloadActual   1: 1 op, 12883358800.00 ns, 12.8834 s/op
+WorkloadActual   2: 1 op, 12926126000.00 ns, 12.9261 s/op
+WorkloadActual   3: 1 op, 12872797200.00 ns, 12.8728 s/op
+WorkloadActual   4: 1 op, 13505117000.00 ns, 13.5051 s/op
+WorkloadActual   5: 1 op, 12958611300.00 ns, 12.9586 s/op
+WorkloadActual   6: 1 op, 12873623500.00 ns, 12.8736 s/op
+WorkloadActual   7: 1 op, 12867017500.00 ns, 12.8670 s/op
+WorkloadActual   8: 1 op, 12956545900.00 ns, 12.9565 s/op
+WorkloadActual   9: 1 op, 13254423900.00 ns, 13.2544 s/op
+WorkloadActual  10: 1 op, 13175483000.00 ns, 13.1755 s/op
+WorkloadActual  11: 1 op, 12974929300.00 ns, 12.9749 s/op
+WorkloadActual  12: 1 op, 12959047100.00 ns, 12.9590 s/op
+WorkloadActual  13: 1 op, 12972218500.00 ns, 12.9722 s/op
+WorkloadActual  14: 1 op, 13037603200.00 ns, 13.0376 s/op
+WorkloadActual  15: 1 op, 12920023700.00 ns, 12.9200 s/op
+
+// AfterActualRun
+WorkloadResult   1: 1 op, 12883358800.00 ns, 12.8834 s/op
+WorkloadResult   2: 1 op, 12926126000.00 ns, 12.9261 s/op
+WorkloadResult   3: 1 op, 12872797200.00 ns, 12.8728 s/op
+WorkloadResult   4: 1 op, 12958611300.00 ns, 12.9586 s/op
+WorkloadResult   5: 1 op, 12873623500.00 ns, 12.8736 s/op
+WorkloadResult   6: 1 op, 12867017500.00 ns, 12.8670 s/op
+WorkloadResult   7: 1 op, 12956545900.00 ns, 12.9565 s/op
+WorkloadResult   8: 1 op, 12974929300.00 ns, 12.9749 s/op
+WorkloadResult   9: 1 op, 12959047100.00 ns, 12.9590 s/op
+WorkloadResult  10: 1 op, 12972218500.00 ns, 12.9722 s/op
+WorkloadResult  11: 1 op, 13037603200.00 ns, 13.0376 s/op
+WorkloadResult  12: 1 op, 12920023700.00 ns, 12.9200 s/op
+GC:  0 0 0 184376 1
+Threading:  0 0 1
+
+// AfterAll
+// Benchmark Process 41812 has exited with code 0.
+
+Mean = 12.933 s, StdErr = 0.015 s (0.12%), N = 12, StdDev = 0.052 s
+Min = 12.867 s, Q1 = 12.881 s, Median = 12.941 s, Q3 = 12.962 s, Max = 13.038 s
+IQR = 0.081 s, LowerFence = 12.759 s, UpperFence = 13.084 s
+ConfidenceInterval = [12.866 s; 13.001 s] (CI 99.9%), Margin = 0.067 s (0.52% of Mean)
+Skewness = 0.25, Kurtosis = 1.93, MValue = 2
+
+// **************************
+// Benchmark: ReformatterBenchmarks.ReformatCompiled: DefaultJob [Text=ProsePage]
+// *** Execute ***
+// Launch: 1 / 1
+// Execute: dotnet "ac65b98f-7b60-485f-85bc-bbedd5918b76.dll" --benchmarkName "benchmark.ReformatterBenchmarks.ReformatCompiled(Text: ProsePage)" --job "Default" --benchmarkId 1 in C:\Users\chris\RiderProjects\ReformatOnCopy\benchmark\bin\Release\net6.0-windows\ac65b98f-7b60-485f-85bc-bbedd5918b76\bin\Release\net6.0-Windows7.0
+// BeforeAnythingElse
+
+// Benchmark Process Environment Information:
+// Runtime=.NET 6.0.4 (6.0.422.16404), X64 RyuJIT
+// GC=Concurrent Workstation
+// Job: DefaultJob
+
+OverheadJitting  1: 1 op, 416700.00 ns, 416.7000 us/op
+WorkloadJitting  1: 1 op, 3750650300.00 ns, 3.7507 s/op
+
+WorkloadWarmup   1: 1 op, 3738761200.00 ns, 3.7388 s/op
+WorkloadWarmup   2: 1 op, 3739375100.00 ns, 3.7394 s/op
+WorkloadWarmup   3: 1 op, 3752093400.00 ns, 3.7521 s/op
+WorkloadWarmup   4: 1 op, 3752676900.00 ns, 3.7527 s/op
+WorkloadWarmup   5: 1 op, 3729391700.00 ns, 3.7294 s/op
+WorkloadWarmup   6: 1 op, 3770986600.00 ns, 3.7710 s/op
+WorkloadWarmup   7: 1 op, 3742549100.00 ns, 3.7425 s/op
+
+// BeforeActualRun
+WorkloadActual   1: 1 op, 3746967700.00 ns, 3.7470 s/op
+WorkloadActual   2: 1 op, 3770597200.00 ns, 3.7706 s/op
+WorkloadActual   3: 1 op, 3740422100.00 ns, 3.7404 s/op
+WorkloadActual   4: 1 op, 3843675600.00 ns, 3.8437 s/op
+WorkloadActual   5: 1 op, 3777424300.00 ns, 3.7774 s/op
+WorkloadActual   6: 1 op, 3756675000.00 ns, 3.7567 s/op
+WorkloadActual   7: 1 op, 3749768500.00 ns, 3.7498 s/op
+WorkloadActual   8: 1 op, 3770157800.00 ns, 3.7702 s/op
+WorkloadActual   9: 1 op, 3746429100.00 ns, 3.7464 s/op
+WorkloadActual  10: 1 op, 3749881000.00 ns, 3.7499 s/op
+WorkloadActual  11: 1 op, 3733104200.00 ns, 3.7331 s/op
+WorkloadActual  12: 1 op, 3739039800.00 ns, 3.7390 s/op
+WorkloadActual  13: 1 op, 3846773100.00 ns, 3.8468 s/op
+WorkloadActual  14: 1 op, 3737065000.00 ns, 3.7371 s/op
+WorkloadActual  15: 1 op, 3737697300.00 ns, 3.7377 s/op
+
+// AfterActualRun
+WorkloadResult   1: 1 op, 3746967700.00 ns, 3.7470 s/op
+WorkloadResult   2: 1 op, 3770597200.00 ns, 3.7706 s/op
+WorkloadResult   3: 1 op, 3740422100.00 ns, 3.7404 s/op
+WorkloadResult   4: 1 op, 3777424300.00 ns, 3.7774 s/op
+WorkloadResult   5: 1 op, 3756675000.00 ns, 3.7567 s/op
+WorkloadResult   6: 1 op, 3749768500.00 ns, 3.7498 s/op
+WorkloadResult   7: 1 op, 3770157800.00 ns, 3.7702 s/op
+WorkloadResult   8: 1 op, 3746429100.00 ns, 3.7464 s/op
+WorkloadResult   9: 1 op, 3749881000.00 ns, 3.7499 s/op
+WorkloadResult  10: 1 op, 3733104200.00 ns, 3.7331 s/op
+WorkloadResult  11: 1 op, 3739039800.00 ns, 3.7390 s/op
+WorkloadResult  12: 1 op, 3737065000.00 ns, 3.7371 s/op
+WorkloadResult  13: 1 op, 3737697300.00 ns, 3.7377 s/op
+GC:  0 0 0 181208 1
+Threading:  0 0 1
+
+// AfterAll
+// Benchmark Process 29572 has exited with code 0.
+
+Mean = 3.750 s, StdErr = 0.004 s (0.11%), N = 13, StdDev = 0.014 s
+Min = 3.733 s, Q1 = 3.739 s, Median = 3.747 s, Q3 = 3.757 s, Max = 3.777 s
+IQR = 0.018 s, LowerFence = 3.713 s, UpperFence = 3.783 s
+ConfidenceInterval = [3.733 s; 3.768 s] (CI 99.9%), Margin = 0.017 s (0.46% of Mean)
+Skewness = 0.62, Kurtosis = 1.88, MValue = 2
+
+// **************************
+// Benchmark: ReformatterBenchmarks.ReformatInterpreted: DefaultJob [Text=HeadingsHeavyPage]
+// *** Execute ***
+// Launch: 1 / 1
+// Execute: dotnet "ac65b98f-7b60-485f-85bc-bbedd5918b76.dll" --benchmarkName "benchmark.ReformatterBenchmarks.ReformatInterpreted(Text: HeadingsHeavyPage)" --job "Default" --benchmarkId 2 in C:\Users\chris\RiderProjects\ReformatOnCopy\benchmark\bin\Release\net6.0-windows\ac65b98f-7b60-485f-85bc-bbedd5918b76\bin\Release\net6.0-Windows7.0
+// BeforeAnythingElse
+
+// Benchmark Process Environment Information:
+// Runtime=.NET 6.0.4 (6.0.422.16404), X64 RyuJIT
+// GC=Concurrent Workstation
+// Job: DefaultJob
+
+OverheadJitting  1: 1 op, 189600.00 ns, 189.6000 us/op
+WorkloadJitting  1: 1 op, 7537536500.00 ns, 7.5375 s/op
+
+WorkloadWarmup   1: 1 op, 7597149100.00 ns, 7.5971 s/op
+WorkloadWarmup   2: 1 op, 7620324400.00 ns, 7.6203 s/op
+WorkloadWarmup   3: 1 op, 7420117000.00 ns, 7.4201 s/op
+WorkloadWarmup   4: 1 op, 7327933100.00 ns, 7.3279 s/op
+WorkloadWarmup   5: 1 op, 7387304100.00 ns, 7.3873 s/op
+WorkloadWarmup   6: 1 op, 7438608600.00 ns, 7.4386 s/op
+WorkloadWarmup   7: 1 op, 7469549400.00 ns, 7.4695 s/op
+WorkloadWarmup   8: 1 op, 7372890600.00 ns, 7.3729 s/op
+
+// BeforeActualRun
+WorkloadActual   1: 1 op, 7507216800.00 ns, 7.5072 s/op
+WorkloadActual   2: 1 op, 7588741800.00 ns, 7.5887 s/op
+WorkloadActual   3: 1 op, 7423112900.00 ns, 7.4231 s/op
+WorkloadActual   4: 1 op, 7346950500.00 ns, 7.3470 s/op
+WorkloadActual   5: 1 op, 7494522700.00 ns, 7.4945 s/op
+WorkloadActual   6: 1 op, 7367760300.00 ns, 7.3678 s/op
+WorkloadActual   7: 1 op, 7647793300.00 ns, 7.6478 s/op
+WorkloadActual   8: 1 op, 7332114600.00 ns, 7.3321 s/op
+WorkloadActual   9: 1 op, 7450644900.00 ns, 7.4506 s/op
+WorkloadActual  10: 1 op, 7536054200.00 ns, 7.5361 s/op
+WorkloadActual  11: 1 op, 7496653800.00 ns, 7.4967 s/op
+WorkloadActual  12: 1 op, 7391892800.00 ns, 7.3919 s/op
+WorkloadActual  13: 1 op, 7533040500.00 ns, 7.5330 s/op
+WorkloadActual  14: 1 op, 7483820100.00 ns, 7.4838 s/op
+WorkloadActual  15: 1 op, 7598100700.00 ns, 7.5981 s/op
+
+// AfterActualRun
+WorkloadResult   1: 1 op, 7507216800.00 ns, 7.5072 s/op
+WorkloadResult   2: 1 op, 7588741800.00 ns, 7.5887 s/op
+WorkloadResult   3: 1 op, 7423112900.00 ns, 7.4231 s/op
+WorkloadResult   4: 1 op, 7346950500.00 ns, 7.3470 s/op
+WorkloadResult   5: 1 op, 7494522700.00 ns, 7.4945 s/op
+WorkloadResult   6: 1 op, 7367760300.00 ns, 7.3678 s/op
+WorkloadResult   7: 1 op, 7647793300.00 ns, 7.6478 s/op
+WorkloadResult   8: 1 op, 7332114600.00 ns, 7.3321 s/op
+WorkloadResult   9: 1 op, 7450644900.00 ns, 7.4506 s/op
+WorkloadResult  10: 1 op, 7536054200.00 ns, 7.5361 s/op
+WorkloadResult  11: 1 op, 7496653800.00 ns, 7.4967 s/op
+WorkloadResult  12: 1 op, 7391892800.00 ns, 7.3919 s/op
+WorkloadResult  13: 1 op, 7533040500.00 ns, 7.5330 s/op
+WorkloadResult  14: 1 op, 7483820100.00 ns, 7.4838 s/op
+WorkloadResult  15: 1 op, 7598100700.00 ns, 7.5981 s/op
+GC:  0 0 0 173608 1
+Threading:  0 0 1
+
+// AfterAll
+// Benchmark Process 49184 has exited with code 0.
+
+Mean = 7.480 s, StdErr = 0.024 s (0.33%), N = 15, StdDev = 0.095 s
+Min = 7.332 s, Q1 = 7.408 s, Median = 7.495 s, Q3 = 7.535 s, Max = 7.648 s
+IQR = 0.127 s, LowerFence = 7.217 s, UpperFence = 7.725 s
+ConfidenceInterval = [7.379 s; 7.581 s] (CI 99.9%), Margin = 0.101 s (1.35% of Mean)
+Skewness = 0.01, Kurtosis = 1.81, MValue = 2
+
+// **************************
+// Benchmark: ReformatterBenchmarks.ReformatCompiled: DefaultJob [Text=HeadingsHeavyPage]
+// *** Execute ***
+// Launch: 1 / 1
+// Execute: dotnet "ac65b98f-7b60-485f-85bc-bbedd5918b76.dll" --benchmarkName "benchmark.ReformatterBenchmarks.ReformatCompiled(Text: HeadingsHeavyPage)" --job "Default" --benchmarkId 3 in C:\Users\chris\RiderProjects\ReformatOnCopy\benchmark\bin\Release\net6.0-windows\ac65b98f-7b60-485f-85bc-bbedd5918b76\bin\Release\net6.0-Windows7.0
+// BeforeAnythingElse
+
+// Benchmark Process Environment Information:
+// Runtime=.NET 6.0.4 (6.0.422.16404), X64 RyuJIT
+// GC=Concurrent Workstation
+// Job: DefaultJob
+
+OverheadJitting  1: 1 op, 211000.00 ns, 211.0000 us/op
+WorkloadJitting  1: 1 op, 2199518900.00 ns, 2.1995 s/op
+
+WorkloadWarmup   1: 1 op, 2142653000.00 ns, 2.1427 s/op
+WorkloadWarmup   2: 1 op, 2185102800.00 ns, 2.1851 s/op
+WorkloadWarmup   3: 1 op, 2203987500.00 ns, 2.2040 s/op
+WorkloadWarmup   4: 1 op, 2188416200.00 ns, 2.1884 s/op
+WorkloadWarmup   5: 1 op, 2176163000.00 ns, 2.1762 s/op
+WorkloadWarmup   6: 1 op, 2164170800.00 ns, 2.1642 s/op
+WorkloadWarmup   7: 1 op, 2260219100.00 ns, 2.2602 s/op
+WorkloadWarmup   8: 1 op, 2236932800.00 ns, 2.2369 s/op
+
+// BeforeActualRun
+WorkloadActual   1: 1 op, 2229650600.00 ns, 2.2297 s/op
+WorkloadActual   2: 1 op, 2137443200.00 ns, 2.1374 s/op
+WorkloadActual   3: 1 op, 2148570800.00 ns, 2.1486 s/op
+WorkloadActual   4: 1 op, 2203591000.00 ns, 2.2036 s/op
+WorkloadActual   5: 1 op, 2202682400.00 ns, 2.2027 s/op
+WorkloadActual   6: 1 op, 2157371800.00 ns, 2.1574 s/op
+WorkloadActual   7: 1 op, 2126034500.00 ns, 2.1260 s/op
+WorkloadActual   8: 1 op, 2168643900.00 ns, 2.1686 s/op
+WorkloadActual   9: 1 op, 2199688000.00 ns, 2.1997 s/op
+WorkloadActual  10: 1 op, 2135697300.00 ns, 2.1357 s/op
+WorkloadActual  11: 1 op, 2135289800.00 ns, 2.1353 s/op
+WorkloadActual  12: 1 op, 2133388300.00 ns, 2.1334 s/op
+WorkloadActual  13: 1 op, 2192825400.00 ns, 2.1928 s/op
+WorkloadActual  14: 1 op, 2140123100.00 ns, 2.1401 s/op
+WorkloadActual  15: 1 op, 2131688500.00 ns, 2.1317 s/op
+
+// AfterActualRun
+WorkloadResult   1: 1 op, 2229650600.00 ns, 2.2297 s/op
+WorkloadResult   2: 1 op, 2137443200.00 ns, 2.1374 s/op
+WorkloadResult   3: 1 op, 2148570800.00 ns, 2.1486 s/op
+WorkloadResult   4: 1 op, 2203591000.00 ns, 2.2036 s/op
+WorkloadResult   5: 1 op, 2202682400.00 ns, 2.2027 s/op
+WorkloadResult   6: 1 op, 2157371800.00 ns, 2.1574 s/op
+WorkloadResult   7: 1 op, 2126034500.00 ns, 2.1260 s/op
+WorkloadResult   8: 1 op, 2168643900.00 ns, 2.1686 s/op
+WorkloadResult   9: 1 op, 2199688000.00 ns, 2.1997 s/op
+WorkloadResult  10: 1 op, 2135697300.00 ns, 2.1357 s/op
+WorkloadResult  11: 1 op, 2135289800.00 ns, 2.1353 s/op
+WorkloadResult  12: 1 op, 2133388300.00 ns, 2.1334 s/op
+WorkloadResult  13: 1 op, 2192825400.00 ns, 2.1928 s/op
+WorkloadResult  14: 1 op, 2140123100.00 ns, 2.1401 s/op
+WorkloadResult  15: 1 op, 2131688500.00 ns, 2.1317 s/op
+GC:  0 0 0 173608 1
+Threading:  0 0 1
+
+// AfterAll
+// Benchmark Process 47176 has exited with code 0.
+
+Mean = 2.163 s, StdErr = 0.009 s (0.40%), N = 15, StdDev = 0.034 s
+Min = 2.126 s, Q1 = 2.135 s, Median = 2.149 s, Q3 = 2.196 s, Max = 2.230 s
+IQR = 0.061 s, LowerFence = 2.044 s, UpperFence = 2.287 s
+ConfidenceInterval = [2.127 s; 2.199 s] (CI 99.9%), Margin = 0.036 s (1.68% of Mean)
+Skewness = 0.56, Kurtosis = 1.68, MValue = 2
+
+// **************************
+// Benchmark: ReformatterBenchmarks.ReformatInterpreted: DefaultJob [Text=HeadingsHeavySnippet]
+// *** Execute ***
+// Launch: 1 / 1
+// Execute: dotnet "ac65b98f-7b60-485f-85bc-bbedd5918b76.dll" --benchmarkName "benchmark.ReformatterBenchmarks.ReformatInterpreted(Text: HeadingsHeavySnippet)" --job "Default" --benchmarkId 4 in C:\Users\chris\RiderProjects\ReformatOnCopy\benchmark\bin\Release\net6.0-windows\ac65b98f-7b60-485f-85bc-bbedd5918b76\bin\Release\net6.0-Windows7.0
+// BeforeAnythingElse
+
+// Benchmark Process Environment Information:
+// Runtime=.NET 6.0.4 (6.0.422.16404), X64 RyuJIT
+// GC=Concurrent Workstation
+// Job: DefaultJob
+
+OverheadJitting  1: 1 op, 195500.00 ns, 195.5000 us/op
+WorkloadJitting  1: 1 op, 630471600.00 ns, 630.4716 ms/op
+
+OverheadJitting  2: 1 op, 300.00 ns, 300.0000 ns/op
+WorkloadJitting  2: 1 op, 603157700.00 ns, 603.1577 ms/op
+
+WorkloadWarmup   1: 1 op, 603725700.00 ns, 603.7257 ms/op
+WorkloadWarmup   2: 1 op, 610896300.00 ns, 610.8963 ms/op
+WorkloadWarmup   3: 1 op, 604043100.00 ns, 604.0431 ms/op
+WorkloadWarmup   4: 1 op, 602034800.00 ns, 602.0348 ms/op
+WorkloadWarmup   5: 1 op, 604587300.00 ns, 604.5873 ms/op
+WorkloadWarmup   6: 1 op, 604114500.00 ns, 604.1145 ms/op
+
+// BeforeActualRun
+WorkloadActual   1: 1 op, 601310800.00 ns, 601.3108 ms/op
+WorkloadActual   2: 1 op, 610969700.00 ns, 610.9697 ms/op
+WorkloadActual   3: 1 op, 601979200.00 ns, 601.9792 ms/op
+WorkloadActual   4: 1 op, 630457200.00 ns, 630.4572 ms/op
+WorkloadActual   5: 1 op, 608219700.00 ns, 608.2197 ms/op
+WorkloadActual   6: 1 op, 601848900.00 ns, 601.8489 ms/op
+WorkloadActual   7: 1 op, 602165700.00 ns, 602.1657 ms/op
+WorkloadActual   8: 1 op, 602421300.00 ns, 602.4213 ms/op
+WorkloadActual   9: 1 op, 607464300.00 ns, 607.4643 ms/op
+WorkloadActual  10: 1 op, 603393300.00 ns, 603.3933 ms/op
+WorkloadActual  11: 1 op, 600646200.00 ns, 600.6462 ms/op
+WorkloadActual  12: 1 op, 601255200.00 ns, 601.2552 ms/op
+WorkloadActual  13: 1 op, 605329200.00 ns, 605.3292 ms/op
+WorkloadActual  14: 1 op, 607841000.00 ns, 607.8410 ms/op
+WorkloadActual  15: 1 op, 606522200.00 ns, 606.5222 ms/op
+
+// AfterActualRun
+WorkloadResult   1: 1 op, 601310800.00 ns, 601.3108 ms/op
+WorkloadResult   2: 1 op, 610969700.00 ns, 610.9697 ms/op
+WorkloadResult   3: 1 op, 601979200.00 ns, 601.9792 ms/op
+WorkloadResult   4: 1 op, 608219700.00 ns, 608.2197 ms/op
+WorkloadResult   5: 1 op, 601848900.00 ns, 601.8489 ms/op
+WorkloadResult   6: 1 op, 602165700.00 ns, 602.1657 ms/op
+WorkloadResult   7: 1 op, 602421300.00 ns, 602.4213 ms/op
+WorkloadResult   8: 1 op, 607464300.00 ns, 607.4643 ms/op
+WorkloadResult   9: 1 op, 603393300.00 ns, 603.3933 ms/op
+WorkloadResult  10: 1 op, 600646200.00 ns, 600.6462 ms/op
+WorkloadResult  11: 1 op, 601255200.00 ns, 601.2552 ms/op
+WorkloadResult  12: 1 op, 605329200.00 ns, 605.3292 ms/op
+WorkloadResult  13: 1 op, 607841000.00 ns, 607.8410 ms/op
+WorkloadResult  14: 1 op, 606522200.00 ns, 606.5222 ms/op
+GC:  0 0 0 60816 1
+Threading:  0 0 1
+
+// AfterAll
+// Benchmark Process 27368 has exited with code 0.
+
+Mean = 604.383 ms, StdErr = 0.878 ms (0.15%), N = 14, StdDev = 3.284 ms
+Min = 600.646 ms, Q1 = 601.881 ms, Median = 602.907 ms, Q3 = 607.229 ms, Max = 610.970 ms
+IQR = 5.347 ms, LowerFence = 593.861 ms, UpperFence = 615.250 ms
+ConfidenceInterval = [600.679 ms; 608.087 ms] (CI 99.9%), Margin = 3.704 ms (0.61% of Mean)
+Skewness = 0.53, Kurtosis = 1.75, MValue = 2
+
+// **************************
+// Benchmark: ReformatterBenchmarks.ReformatCompiled: DefaultJob [Text=HeadingsHeavySnippet]
+// *** Execute ***
+// Launch: 1 / 1
+// Execute: dotnet "ac65b98f-7b60-485f-85bc-bbedd5918b76.dll" --benchmarkName "benchmark.ReformatterBenchmarks.ReformatCompiled(Text: HeadingsHeavySnippet)" --job "Default" --benchmarkId 5 in C:\Users\chris\RiderProjects\ReformatOnCopy\benchmark\bin\Release\net6.0-windows\ac65b98f-7b60-485f-85bc-bbedd5918b76\bin\Release\net6.0-Windows7.0
+// BeforeAnythingElse
+
+// Benchmark Process Environment Information:
+// Runtime=.NET 6.0.4 (6.0.422.16404), X64 RyuJIT
+// GC=Concurrent Workstation
+// Job: DefaultJob
+
+OverheadJitting  1: 1 op, 191300.00 ns, 191.3000 us/op
+WorkloadJitting  1: 1 op, 190105300.00 ns, 190.1053 ms/op
+
+WorkloadPilot    1: 2 op, 340015800.00 ns, 170.0079 ms/op
+WorkloadPilot    2: 3 op, 506670700.00 ns, 168.8902 ms/op
+
+WorkloadWarmup   1: 3 op, 508471200.00 ns, 169.4904 ms/op
+WorkloadWarmup   2: 3 op, 505448100.00 ns, 168.4827 ms/op
+WorkloadWarmup   3: 3 op, 505490200.00 ns, 168.4967 ms/op
+WorkloadWarmup   4: 3 op, 508194800.00 ns, 169.3983 ms/op
+WorkloadWarmup   5: 3 op, 507151300.00 ns, 169.0504 ms/op
+WorkloadWarmup   6: 3 op, 505005800.00 ns, 168.3353 ms/op
+WorkloadWarmup   7: 3 op, 509379400.00 ns, 169.7931 ms/op
+WorkloadWarmup   8: 3 op, 510612300.00 ns, 170.2041 ms/op
+WorkloadWarmup   9: 3 op, 525817200.00 ns, 175.2724 ms/op
+WorkloadWarmup  10: 3 op, 505587500.00 ns, 168.5292 ms/op
+
+// BeforeActualRun
+WorkloadActual   1: 3 op, 508133900.00 ns, 169.3780 ms/op
+WorkloadActual   2: 3 op, 513153700.00 ns, 171.0512 ms/op
+WorkloadActual   3: 3 op, 518108900.00 ns, 172.7030 ms/op
+WorkloadActual   4: 3 op, 526265100.00 ns, 175.4217 ms/op
+WorkloadActual   5: 3 op, 522134800.00 ns, 174.0449 ms/op
+WorkloadActual   6: 3 op, 527252700.00 ns, 175.7509 ms/op
+WorkloadActual   7: 3 op, 506723600.00 ns, 168.9079 ms/op
+WorkloadActual   8: 3 op, 510677600.00 ns, 170.2259 ms/op
+WorkloadActual   9: 3 op, 509360900.00 ns, 169.7870 ms/op
+WorkloadActual  10: 3 op, 507427500.00 ns, 169.1425 ms/op
+WorkloadActual  11: 3 op, 509771700.00 ns, 169.9239 ms/op
+WorkloadActual  12: 3 op, 508523300.00 ns, 169.5078 ms/op
+WorkloadActual  13: 3 op, 509272600.00 ns, 169.7575 ms/op
+WorkloadActual  14: 3 op, 508614800.00 ns, 169.5383 ms/op
+WorkloadActual  15: 3 op, 509364500.00 ns, 169.7882 ms/op
+
+// AfterActualRun
+WorkloadResult   1: 3 op, 508133900.00 ns, 169.3780 ms/op
+WorkloadResult   2: 3 op, 513153700.00 ns, 171.0512 ms/op
+WorkloadResult   3: 3 op, 518108900.00 ns, 172.7030 ms/op
+WorkloadResult   4: 3 op, 522134800.00 ns, 174.0449 ms/op
+WorkloadResult   5: 3 op, 506723600.00 ns, 168.9079 ms/op
+WorkloadResult   6: 3 op, 510677600.00 ns, 170.2259 ms/op
+WorkloadResult   7: 3 op, 509360900.00 ns, 169.7870 ms/op
+WorkloadResult   8: 3 op, 507427500.00 ns, 169.1425 ms/op
+WorkloadResult   9: 3 op, 509771700.00 ns, 169.9239 ms/op
+WorkloadResult  10: 3 op, 508523300.00 ns, 169.5078 ms/op
+WorkloadResult  11: 3 op, 509272600.00 ns, 169.7575 ms/op
+WorkloadResult  12: 3 op, 508614800.00 ns, 169.5383 ms/op
+WorkloadResult  13: 3 op, 509364500.00 ns, 169.7882 ms/op
+GC:  0 0 0 169880 3
+Threading:  0 0 3
+
+// AfterAll
+// Benchmark Process 46120 has exited with code 0.
+
+Mean = 170.289 ms, StdErr = 0.413 ms (0.24%), N = 13, StdDev = 1.491 ms
+Min = 168.908 ms, Q1 = 169.508 ms, Median = 169.787 ms, Q3 = 170.226 ms, Max = 174.045 ms
+IQR = 0.718 ms, LowerFence = 168.431 ms, UpperFence = 171.303 ms
+ConfidenceInterval = [168.504 ms; 172.074 ms] (CI 99.9%), Margin = 1.785 ms (1.05% of Mean)
+Skewness = 1.42, Kurtosis = 3.74, MValue = 2
+
+// ***** BenchmarkRunner: Finish  *****
+
+// * Export *
+  BenchmarkDotNet.Artifacts\results\benchmark.ReformatterBenchmarks-report.csv
+  BenchmarkDotNet.Artifacts\results\benchmark.ReformatterBenchmarks-report-github.md
+  BenchmarkDotNet.Artifacts\results\benchmark.ReformatterBenchmarks-report.html
+
+// * Detailed results *
+ReformatterBenchmarks.ReformatInterpreted: DefaultJob [Text=ProsePage]
+Runtime = .NET 6.0.4 (6.0.422.16404), X64 RyuJIT; GC = Concurrent Workstation
+Mean = 12.933 s, StdErr = 0.015 s (0.12%), N = 12, StdDev = 0.052 s
+Min = 12.867 s, Q1 = 12.881 s, Median = 12.941 s, Q3 = 12.962 s, Max = 13.038 s
+IQR = 0.081 s, LowerFence = 12.759 s, UpperFence = 13.084 s
+ConfidenceInterval = [12.866 s; 13.001 s] (CI 99.9%), Margin = 0.067 s (0.52% of Mean)
+Skewness = 0.25, Kurtosis = 1.93, MValue = 2
+-------------------- Histogram --------------------
+[12.837 s ; 13.068 s) | @@@@@@@@@@@@
+---------------------------------------------------
+
+ReformatterBenchmarks.ReformatCompiled: DefaultJob [Text=ProsePage]
+Runtime = .NET 6.0.4 (6.0.422.16404), X64 RyuJIT; GC = Concurrent Workstation
+Mean = 3.750 s, StdErr = 0.004 s (0.11%), N = 13, StdDev = 0.014 s
+Min = 3.733 s, Q1 = 3.739 s, Median = 3.747 s, Q3 = 3.757 s, Max = 3.777 s
+IQR = 0.018 s, LowerFence = 3.713 s, UpperFence = 3.783 s
+ConfidenceInterval = [3.733 s; 3.768 s] (CI 99.9%), Margin = 0.017 s (0.46% of Mean)
+Skewness = 0.62, Kurtosis = 1.88, MValue = 2
+-------------------- Histogram --------------------
+[3.725 s ; 3.785 s) | @@@@@@@@@@@@@
+---------------------------------------------------
+
+ReformatterBenchmarks.ReformatInterpreted: DefaultJob [Text=HeadingsHeavyPage]
+Runtime = .NET 6.0.4 (6.0.422.16404), X64 RyuJIT; GC = Concurrent Workstation
+Mean = 7.480 s, StdErr = 0.024 s (0.33%), N = 15, StdDev = 0.095 s
+Min = 7.332 s, Q1 = 7.408 s, Median = 7.495 s, Q3 = 7.535 s, Max = 7.648 s
+IQR = 0.127 s, LowerFence = 7.217 s, UpperFence = 7.725 s
+ConfidenceInterval = [7.379 s; 7.581 s] (CI 99.9%), Margin = 0.101 s (1.35% of Mean)
+Skewness = 0.01, Kurtosis = 1.81, MValue = 2
+-------------------- Histogram --------------------
+[7.282 s ; 7.698 s) | @@@@@@@@@@@@@@@
+---------------------------------------------------
+
+ReformatterBenchmarks.ReformatCompiled: DefaultJob [Text=HeadingsHeavyPage]
+Runtime = .NET 6.0.4 (6.0.422.16404), X64 RyuJIT; GC = Concurrent Workstation
+Mean = 2.163 s, StdErr = 0.009 s (0.40%), N = 15, StdDev = 0.034 s
+Min = 2.126 s, Q1 = 2.135 s, Median = 2.149 s, Q3 = 2.196 s, Max = 2.230 s
+IQR = 0.061 s, LowerFence = 2.044 s, UpperFence = 2.287 s
+ConfidenceInterval = [2.127 s; 2.199 s] (CI 99.9%), Margin = 0.036 s (1.68% of Mean)
+Skewness = 0.56, Kurtosis = 1.68, MValue = 2
+-------------------- Histogram --------------------
+[2.120 s ; 2.248 s) | @@@@@@@@@@@@@@@
+---------------------------------------------------
+
+ReformatterBenchmarks.ReformatInterpreted: DefaultJob [Text=HeadingsHeavySnippet]
+Runtime = .NET 6.0.4 (6.0.422.16404), X64 RyuJIT; GC = Concurrent Workstation
+Mean = 604.383 ms, StdErr = 0.878 ms (0.15%), N = 14, StdDev = 3.284 ms
+Min = 600.646 ms, Q1 = 601.881 ms, Median = 602.907 ms, Q3 = 607.229 ms, Max = 610.970 ms
+IQR = 5.347 ms, LowerFence = 593.861 ms, UpperFence = 615.250 ms
+ConfidenceInterval = [600.679 ms; 608.087 ms] (CI 99.9%), Margin = 3.704 ms (0.61% of Mean)
+Skewness = 0.53, Kurtosis = 1.75, MValue = 2
+-------------------- Histogram --------------------
+[598.858 ms ; 612.758 ms) | @@@@@@@@@@@@@@
+---------------------------------------------------
+
+ReformatterBenchmarks.ReformatCompiled: DefaultJob [Text=HeadingsHeavySnippet]
+Runtime = .NET 6.0.4 (6.0.422.16404), X64 RyuJIT; GC = Concurrent Workstation
+Mean = 170.289 ms, StdErr = 0.413 ms (0.24%), N = 13, StdDev = 1.491 ms
+Min = 168.908 ms, Q1 = 169.508 ms, Median = 169.787 ms, Q3 = 170.226 ms, Max = 174.045 ms
+IQR = 0.718 ms, LowerFence = 168.431 ms, UpperFence = 171.303 ms
+ConfidenceInterval = [168.504 ms; 172.074 ms] (CI 99.9%), Margin = 1.785 ms (1.05% of Mean)
+Skewness = 1.42, Kurtosis = 3.74, MValue = 2
+-------------------- Histogram --------------------
+[168.076 ms ; 174.877 ms) | @@@@@@@@@@@@@
+---------------------------------------------------
+
+// * Summary *
+
+BenchmarkDotNet=v0.13.1, OS=Windows 10.0.22000
+AMD Ryzen 9 3950X, 1 CPU, 32 logical and 16 physical cores
+.NET SDK=6.0.202
+  [Host]     : .NET 6.0.4 (6.0.422.16404), X64 RyuJIT
+  DefaultJob : .NET 6.0.4 (6.0.422.16404), X64 RyuJIT
+
+
+|              Method |                 Text |        Mean |     Error |   StdDev |         P95 | Ratio | Allocated |
+|-------------------- |--------------------- |------------:|----------:|---------:|------------:|------:|----------:|
+| ReformatInterpreted |            ProsePage | 12,933.5 ms |  67.23 ms | 52.49 ms | 13,003.1 ms |  1.00 |    180 KB |
+|    ReformatCompiled |            ProsePage |  3,750.4 ms |  17.16 ms | 14.33 ms |  3,773.3 ms |  0.29 |    177 KB |
+|                     |                      |             |           |          |             |       |           |
+| ReformatInterpreted |    HeadingsHeavyPage |  7,479.9 ms | 101.08 ms | 94.55 ms |  7,613.0 ms |  1.00 |    170 KB |
+|    ReformatCompiled |    HeadingsHeavyPage |  2,162.8 ms |  36.24 ms | 33.90 ms |  2,211.4 ms |  0.29 |    170 KB |
+|                     |                      |             |           |          |             |       |           |
+| ReformatInterpreted | HeadingsHeavySnippet |    604.4 ms |   3.70 ms |  3.28 ms |    609.2 ms |  1.00 |     59 KB |
+|    ReformatCompiled | HeadingsHeavySnippet |    170.3 ms |   1.79 ms |  1.49 ms |    173.2 ms |  0.28 |     55 KB |
+
+// * Hints *
+Outliers
+  ReformatterBenchmarks.ReformatInterpreted: Default -> 3 outliers were removed (13.18 s..13.51 s)
+  ReformatterBenchmarks.ReformatCompiled: Default    -> 2 outliers were removed (3.84 s, 3.85 s)
+  ReformatterBenchmarks.ReformatInterpreted: Default -> 1 outlier  was  removed (630.46 ms)
+  ReformatterBenchmarks.ReformatCompiled: Default    -> 2 outliers were removed (175.42 ms, 175.75 ms)
+
+// * Legends *
+  Text      : Value of the 'Text' parameter
+  Mean      : Arithmetic mean of all measurements
+  Error     : Half of 99.9% confidence interval
+  StdDev    : Standard deviation of all measurements
+  P95       : Percentile 95
+  Ratio     : Mean of the ratio distribution ([Current]/[Baseline])
+  Allocated : Allocated memory per single operation (managed only, inclusive, 1KB = 1024B)
+  1 ms      : 1 Millisecond (0.001 sec)
+
+// * Diagnostic Output - MemoryDiagnoser *
+
+
+// ***** BenchmarkRunner: End *****
+// ** Remained 0 benchmark(s) to run **
+Run time: 00:11:39 (699.84 sec), executed benchmarks: 6
+
+Global total time: 00:11:44 (704.55 sec), executed benchmarks: 6

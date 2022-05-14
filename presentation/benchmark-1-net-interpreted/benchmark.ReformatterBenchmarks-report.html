@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+<meta charset='utf-8' />
+<title>benchmark.ReformatterBenchmarks-20220507-111739</title>
+
+<style type="text/css">
+	table { border-collapse: collapse; display: block; width: 100%; overflow: auto; }
+	td, th { padding: 6px 13px; border: 1px solid #ddd; text-align: right; }
+	tr { background-color: #fff; border-top: 1px solid #ccc; }
+	tr:nth-child(even) { background: #f8f8f8; }
+</style>
+</head>
+<body>
+<pre><code>
+BenchmarkDotNet=v0.13.1, OS=Windows 10.0.22000
+AMD Ryzen 9 3950X, 1 CPU, 32 logical and 16 physical cores
+.NET SDK=6.0.202
+  [Host]     : .NET 6.0.4 (6.0.422.16404), X64 RyuJIT
+  DefaultJob : .NET 6.0.4 (6.0.422.16404), X64 RyuJIT
+</code></pre>
+<pre><code></code></pre>
+
+<table>
+<thead><tr><th>       Method</th><th>          Text</th><th> Mean</th><th>Error</th><th>StdDev</th><th>  P95</th><th>Ratio</th><th>Allocated</th>
+</tr>
+</thead><tbody><tr><td>ReformatInterpreted</td><td>ProsePage</td><td>12,933.5 ms</td><td>67.23 ms</td><td>52.49 ms</td><td>13,003.1 ms</td><td>1.00</td><td>180 KB</td>
+</tr><tr><td>ReformatCompiled</td><td>ProsePage</td><td>3,750.4 ms</td><td>17.16 ms</td><td>14.33 ms</td><td>3,773.3 ms</td><td>0.29</td><td>177 KB</td>
+</tr><tr><td>ReformatInterpreted</td><td>HeadingsHeavyPage</td><td>7,479.9 ms</td><td>101.08 ms</td><td>94.55 ms</td><td>7,613.0 ms</td><td>1.00</td><td>170 KB</td>
+</tr><tr><td>ReformatCompiled</td><td>HeadingsHeavyPage</td><td>2,162.8 ms</td><td>36.24 ms</td><td>33.90 ms</td><td>2,211.4 ms</td><td>0.29</td><td>170 KB</td>
+</tr><tr><td>ReformatInterpreted</td><td>HeadingsHeavySnippet</td><td>604.4 ms</td><td>3.70 ms</td><td>3.28 ms</td><td>609.2 ms</td><td>1.00</td><td>59 KB</td>
+</tr><tr><td>ReformatCompiled</td><td>HeadingsHeavySnippet</td><td>170.3 ms</td><td>1.79 ms</td><td>1.49 ms</td><td>173.2 ms</td><td>0.28</td><td>55 KB</td>
+</tr></tbody></table>
+</body>
+</html>
