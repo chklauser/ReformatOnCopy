@@ -216,7 +216,7 @@ crate-type = ["cdylib"]
 
 implement our transformation function in Rust <twemoji-racing-car />
 ```rust {1,3}
-pub fn reformat_rs<W>(input: &str, output: I) -> std::fmt::Result where W: std::fmt::Write {
+pub fn reformat_rs<W>(input: &str, output: W) -> std::fmt::Result where W: std::fmt::Write {
   // left as exercise for the reader
 }
 ```
