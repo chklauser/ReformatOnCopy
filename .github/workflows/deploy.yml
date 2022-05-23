@@ -19,11 +19,13 @@ jobs:
         run: yarn install --frozen-lockfile
         working-directory: ${{ env.presentation_dir }}
       - name: Build
-        run: yarn run build
+        run: yarn run build --base=/ReformatOnCopy/
         working-directory: ${{ env.presentation_dir }}
       - name: Deploy pages
         uses: crazy-max/ghaction-github-pages@v2
         with:
           build_dir: ${{ env.presentation_dir }}/dist
+          jekyll: false
+          target_branch: gh-pages
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
