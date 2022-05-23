@@ -17,9 +17,10 @@ drawings:
   persist: false
 ---
  
-# Using <rust-logo /> `regex` from <logos-c-sharp />
+<!-- # Using <rust-logo /> `regex` from <logos-c-sharp /> -->
+# Splitting lines, but _fast_
 
-When .NET regular expressions aren't fast enough
+When .NET regular expressions aren't fast enough <logos-c-sharp />
 
 <div class="abs-br m-6 flex gap-2">
   <a href="https://github.com/chklauser/ReformatOnCopy" target="_blank" alt="GitHub"
