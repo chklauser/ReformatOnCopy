@@ -376,6 +376,7 @@ strong, .cool {
  - [SpeedScope](https://www.speedscope.app/) can visualize traces <twemoji-bar-chart />
  - Create **test suite *before*** you optimize  <twemoji-police-car-light />
  - Integration between Rust and C# was **surprisingly painless** <rust-logo /><twemoji-handshake /><logos-c-sharp />
+ - .NET 7.0 has [a 💩-_TON_](https://devblogs.microsoft.com/dotnet/regular-expression-improvements-in-dotnet-7/) of improvements for regular expressions 🤩
 
 
 ---
