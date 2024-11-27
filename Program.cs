@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Threading;
@@ -16,8 +17,9 @@ public static class Program
     /// </summary>
     /// <param name="program">Name of the process(es) (executable, without extension) to monitor.</param>
     /// <param name="ignore">Name of process(es) (executable, without extension) to ignore.</param>
+    /// <param name="vocab">Vocabularies to consider. Supported: splittermond, numenera</param>
     [UsedImplicitly]
-    public static async Task<int> OnCopy(string[]? program = null, string[]? ignore = null)
+    public static async Task<int> OnCopy(string[]? program = null, string[]? ignore = null, string[]? vocab = null)
     {
         if (program == null || program.Length == 0)
         {
@@ -35,28 +37,54 @@ public static class Program
             shouldExit.SetResult();
         };
 
-        runInterceptorInBackground(program, ignore);
+        runInterceptorInBackground(program, ignore, vocabFor(vocab));
 
         Console.WriteLine("Ctrl+C to exit");
         await shouldExit.Task;
         return 0;
     }
 
-    private static void runInterceptorInBackground(string[] program, string[] ignore)
+    static IEnumerable<HeadingPattern> vocabFor(string[]? vocab)
     {
-        var reFormatter = new Reformatter(Splittermond.Headings);
+        if (vocab == null)
+        {
+            yield break;
+        }
+        
+        foreach(var v in vocab)
+        {
+            switch (v.ToLowerInvariant())
+            {
+                case "splittermond":
+                    foreach (var h in Splittermond.Headings)
+                    {
+                        yield return h;
+                    }
+                    break;
+                case "numenera":
+                    foreach (var h in Numenera.Headings)
+                    {
+                        yield return h;
+                    }
+                    break;
+                default:
+                    throw new InvalidOperationException("Unsupported vocabulary: " + v);
+            }
+        }
+    }
+
+    private static void runInterceptorInBackground(
+        string[] program,
+        string[] ignore,
+        IEnumerable<HeadingPattern> vocabulary
+    )
+    {
+        var reFormatter = new Reformatter(vocabulary);
         
         // The clipboard monitor needs to run in an STA thread because it maintains a hidden window that
         // receives clipboard events.
         var pump = new Thread(() =>
         {
-            bool isSelf(string? programName) =>
-                programName != null && (
-                    programName.Contains(Assembly.GetExecutingAssembly().GetName().Name ?? "ReformatOnCopy",
-                        StringComparison.OrdinalIgnoreCase)
-                    || ignore.Any(name => programName.Contains(name, StringComparison.OrdinalIgnoreCase))
-                );
-
             var monitor = new SharpClipboard()
             {
                 MonitoringEnabled = true
@@ -77,6 +105,14 @@ public static class Program
                 lastOutput = intercept(e, reFormatter, program);
             };
             Application.Run(monitor);
+            return;
+
+            bool isSelf(string? programName) =>
+                programName != null && (
+                    programName.Contains(Assembly.GetExecutingAssembly().GetName().Name ?? "ReformatOnCopy",
+                        StringComparison.OrdinalIgnoreCase)
+                    || ignore.Any(name => programName.Contains(name, StringComparison.OrdinalIgnoreCase))
+                );
         }) { IsBackground = true, Name = "pump" }; // background means that the thread will shut down when the app exits
         pump.SetApartmentState(ApartmentState.STA);
         pump.Start();
