@@ -95,16 +95,17 @@ public class Reformatter
 
     internal static string? AssembleHeadingPattern(IEnumerable<HeadingPattern> headingPatterns)
     {
-        var result = "^" + string.Join('|', headingPatterns.GroupBy(p => p.ExpectColon)
+        var result = string.Join('|', headingPatterns
+            .GroupBy(p => p.ExpectColon)
             .OrderByDescending(g => g.Key) // for predictability (colon first)
             .Select(g =>
-                Regex.Replace(
+                "^" + Regex.Replace(
                     $@"(?<title{(g.Key ? "1" : "2")}>{string.Join('|', g.Select(h => h.Pattern))}){(g.Key ? ":" : "")}\s*",
                     @"(?!<\\)\\s",
                     SpacePattern
                 )
             ));
-        return result == "^" ? null : result;
+        return result == "" ? null : result;
     }
 
     public string Reformat(string input)

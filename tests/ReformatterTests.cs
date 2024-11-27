@@ -215,7 +215,7 @@ public class ReformatterTests
         var result = Reformatter.AssembleHeadingPattern(headings);
         
         // Assert
-        result.Should().Be(@"^(?<title1>h3|h4):[\t\p{Z}-[\p{Zl}]]*|(?<title2>h1|h2)[\t\p{Z}-[\p{Zl}]]*");
+        result.Should().Be(@"^(?<title1>h3|h4):[\t\p{Z}-[\p{Zl}]]*|^(?<title2>h1|h2)[\t\p{Z}-[\p{Zl}]]*");
     }
 
     [Test]
@@ -232,6 +232,6 @@ public class ReformatterTests
         var result = Reformatter.AssembleHeadingPattern(headings);
         
         // Assert
-        result.Should().Be(@"^(?<title1>h1[\t\p{Z}-[\p{Zl}]]+h2):[\t\p{Z}-[\p{Zl}]]*|(?<title2>h3[\t\p{Z}-[\p{Zl}]]+h4)[\t\p{Z}-[\p{Zl}]]*");
+        result.Should().Be(@"^(?<title1>h1[\t\p{Z}-[\p{Zl}]]+h2):[\t\p{Z}-[\p{Zl}]]*|^(?<title2>h3[\t\p{Z}-[\p{Zl}]]+h4)[\t\p{Z}-[\p{Zl}]]*");
     }
 }
