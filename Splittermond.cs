@@ -6,6 +6,7 @@ namespace ReformatOnCopy;
 [SuppressMessage("ReSharper", "StringLiteralTypo")]
 public static class Splittermond
 {
+    private const string H1 = "# $0\n";
     private const string H2 = "## $0\n\n";
     private const string H3 = "### $0\n\n";
     private const string PrefixColon = "**$0**: ";
@@ -37,6 +38,15 @@ public static class Splittermond
         new(@"Einwohner", H2),
         new(@"Besonderheiten", H2),
         new(@"Wer ist wer \w+([\t\p{Z}-[\p{Zl}]]+\w+){1,5}", H2),
-        new(@"Ausrüstung und Umstände", H2, ExpectColon: false)
+        new(@"Ausrüstung und Umstände", H2, ExpectColon: false),
+        // Orden und Banden
+        new(@"Hintergrund", H1, false),
+        new(@"Motivation", H1, false),
+        new(@"Hierarchie und Struktur", H1, false),
+        new(@"Ressourcen und Mittel", H1, false),
+        new(@"Vorgehen", H1, false),
+        new(@"Verbündete und Feinde", H1, false),
+        new(@"Mitglieder", H2, false),
+        new(@"Ziele", H2, false)
     );
 }
