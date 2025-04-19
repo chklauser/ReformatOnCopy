@@ -12,7 +12,7 @@ public class ReformatterTests
     [SetUp]
     public void Setup()
     {
-        reformatter = new(Enumerable.Empty<HeadingPattern>());
+        reformatter = new([]);
     }
 
     [Test]
@@ -159,7 +159,7 @@ public class ReformatterTests
     public void AssembleHeadings_Zero()
     {
         // Act
-        var result = Reformatter.AssembleHeadingPattern(Enumerable.Empty<HeadingPattern>());
+        var result = Reformatter.AssembleHeadingPattern([]);
         
         // Assert
         result.Should().BeNull();

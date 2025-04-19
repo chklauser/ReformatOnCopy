@@ -64,8 +64,7 @@ public class ReformatterBenchmarks
 
     #region Texts
 
-    private static readonly string[] _texts =
-    {
+    private static readonly string[] _texts = [
         @"
 Klima
 Zzzz Zzzzzzzzzz Zzzzzzzzz Zzzzzz Zzzzzz Zzzz Zzzz Zzzzzzzzzzzz Zzzz-
@@ -294,8 +293,8 @@ Religion: Zzzzz Zzzzzzzzz; Zzzzzzzzzz Zzzzzzzzzz Zzzz Zzzzzz
 Zzzz Zzzzzzzzzzz Zzzz Zzzzzzzzzzz Zzzz Zzzzzzzzzzzz
 Allgemeine Zzzzzzzzz: Zzzzzzzzzzzzz und Zzzzzzzzzzz, Zzzzz
 Zzzzzzzz Zzzzzzzzz Zzzzzzzz
-"
-    };
+",
+    ];
 
     #endregion
 }

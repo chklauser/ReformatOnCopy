@@ -2,6 +2,7 @@
 using System.Buffers;
 using System.Collections.Generic;
 using System.Collections.Immutable;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
@@ -48,7 +49,8 @@ public enum ReformatPasses
     /// Detects Unicode bullet points (•) and removes them. They serve as breaks.
     /// </summary>
     RemoveBulletPoints = 4,
-    All = UnnecessaryLineBreaks | DetectHeadings | RemoveBulletPoints,
+    ToMarkdown = 8,
+    All = UnnecessaryLineBreaks | DetectHeadings | RemoveBulletPoints  | ToMarkdown,
 }
 
 /// <summary>
@@ -174,7 +176,8 @@ public partial class Reformatter
                 fixed (byte* inputPtr = inputBuf)
                 fixed (byte* outputPtr = outputBuf)
                 {
-                    var result = reformat(inputPtr, effectiveUtf8ByteCount, outputPtr, outputBuf.Length);
+                    var options = new ReformatOptions() { MarkdownBreaks = enabled(ReformatPasses.ToMarkdown) };
+                    var result = reformat(inputPtr, effectiveUtf8ByteCount, outputPtr, outputBuf.Length, &options);
                     if (result < 0)
                     {
                         throw new("Error during line break detection. Error code: " + result);
@@ -197,13 +200,22 @@ public partial class Reformatter
     /// Rust implementation of the line break  removal. The regular expression used to detect line breaks is not very
     /// fast using the .NET regular expression implementation. The rust regex crate is roughly 1000× faster.
     /// </summary>
-    /// <param name="inputBuf">Pointer to a buffer containing the UTF-8 encoded input string of length <paramref name="inputLen"/>. No terminating zero byte required. The allocated buffer may of course be larger than <paramref name="inputLen"/>.</param>
+    /// <param name="inputBuf">Pointer to a buffer containing the UTF-8 encoded input string of length <paramref name="inputLen"/>. No terminating zero bytes required. The allocated buffer may of course be larger than <paramref name="inputLen"/>.</param>
     /// <param name="inputLen">The length of the UTF-8 encoded input string, in bytes.</param>
     /// <param name="outputBuf">Pointer to the buffer that the function will write its output to. Must not alias <paramref name="inputBuf"/>! Must be at least 1.5 as large as <paramref name="inputLen"/>. Contents of the output buffer are never read.</param>
     /// <param name="outputCapacity">The length of the <paramref name="outputBuf"/>.</param>
+    /// <param name="options">Options configuring the reformatting behavior.</param>
     /// <returns>If >= 0, the number of UTF-8 encoded bytes written to the <paramref name="outputBuf"/>. If &lt; 0, an error has occurred</returns>
     [DllImport("libreformat", EntryPoint = "reformat", ExactSpelling = true)]
-    static extern unsafe nint reformat(byte* inputBuf, int inputLen, byte* outputBuf, int outputCapacity);
+    static extern unsafe nint reformat(byte* inputBuf, int inputLen, byte* outputBuf, int outputCapacity, ReformatOptions* options);
+
+    [StructLayout(LayoutKind.Sequential)]
+    [SuppressMessage("ReSharper", "UnusedAutoPropertyAccessor.Local")]
+    readonly struct ReformatOptions
+    {
+        [field:MarshalAs(UnmanagedType.U1)] // important because the default representation is 4 bytes (because Windows)
+        public bool MarkdownBreaks { get; init; }
+    }
     
     private bool enabled(ReformatPasses pass)
     {

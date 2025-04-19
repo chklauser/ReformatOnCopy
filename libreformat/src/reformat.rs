@@ -84,8 +84,11 @@ where
                 output.write_str(par_break)?;
                 output.write_str(after.as_str())?;
             }
-            // Case 3: normalize multiple line breaks to one paragraph break
+            // Case 3: normalize multiple line breaks or bullet points to one paragraph break
             (_, Some(break_m), _) if contains_more_than_one_line_break(break_m.as_str()) => {
+                output.write_str(par_break)?;
+            }
+            (_,Some(break_m), _) if contains_mdot(break_m.as_str()) => {
                 output.write_str(par_break)?;
             }
             // Case 4 (default): Remove the break
@@ -106,6 +109,10 @@ where
     }
 
     Ok(())
+}
+
+fn contains_mdot(input: &str) -> bool {
+    input.contains('•')
 }
 
 /// Copy `input` to `output` skipping over any occurrences of the character `skip`.
@@ -420,9 +427,7 @@ mod tests {
     #[test]
     fn treat_mdot_as_break() {
         // ///// GIVEN /////
-        let input = "Du könntest z. B.:
-\n• einen Apfel
-\n• eine Birne";
+        let input = "Du könntest z. B.:\n• einen Apfel\n• eine Birne";
         let mut output = String::new();
 
         // ///// WHEN //////
@@ -431,6 +436,20 @@ mod tests {
         // ///// THEN //////
         assert_eq!(result, Ok(()));
         assert_eq!(output, "Du könntest z. B.:\n\neinen Apfel\n\neine Birne");
+    }
+
+    #[test]
+    fn treat_mdot_as_break2() {
+        // ///// GIVEN /////
+        let input = "Nimm einen Wert z. B.:\r\n• (Apfel) Baum\r\n• (Birnen) Saft\r\nBEZIEHUNGEN INNERHALB";
+        let mut output = String::new();
+
+        // ///// WHEN //////
+        let result = reformat_rs::<_, &mut _>(input, &mut output, &Default::default());
+
+        // ///// THEN //////
+        assert_eq!(result, Ok(()));
+        assert_eq!(output, "Nimm einen Wert z. B.:\n\n(Apfel) Baum\n\n(Birnen) Saft BEZIEHUNGEN INNERHALB");
     }
 
     #[test]

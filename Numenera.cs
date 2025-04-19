@@ -7,7 +7,6 @@ namespace ReformatOnCopy;
 public static class Numenera
 {
     const string H3 = "### $0\n\n";
-    const string PrefixColon = "**$0**: ";
 
     public static readonly IImmutableList<HeadingPattern> Headings = ImmutableArray.Create<HeadingPattern>(
         new("Level", H3),

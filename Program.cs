@@ -17,17 +17,18 @@ public static class Program
     /// </summary>
     /// <param name="program">Name of the process(es) (executable, without extension) to monitor.</param>
     /// <param name="ignore">Name of process(es) (executable, without extension) to ignore.</param>
-    /// <param name="vocab">Vocabularies to consider. Supported: splittermond, numenera</param>
+    /// <param name="vocab">Vocabularies to consider. Supported: splittermond, numenera, cityofmist</param>
+    /// <param name="markdown">Generate markdown output.</param>
     [UsedImplicitly]
-    public static async Task<int> OnCopy(string[]? program = null, string[]? ignore = null, string[]? vocab = null)
+    public static async Task<int> OnCopy(string[]? program = null, string[]? ignore = null, string[]? vocab = null, bool markdown = false)
     {
         if (program == null || program.Length == 0)
         {
-            program = new[] { "SumatraPDF" };
+            program = ["SumatraPDF"];
         }
         if(ignore == null || ignore.Length == 0)
         {
-            ignore = new[] { "WindowsTerminal" };
+            ignore = ["WindowsTerminal"];
         }
         
         // Allow user to exit with Ctrl+C
@@ -37,7 +38,7 @@ public static class Program
             shouldExit.SetResult();
         };
 
-        runInterceptorInBackground(program, ignore, vocabFor(vocab));
+        runInterceptorInBackground(program, ignore, vocabFor(vocab), markdown);
 
         Console.WriteLine("Ctrl+C to exit");
         await shouldExit.Task;
@@ -67,6 +68,12 @@ public static class Program
                         yield return h;
                     }
                     break;
+                case "cityofmist":
+                    foreach (var h in CityOfMist.Headings)
+                    {
+                        yield return h;
+                    }
+                    break;
                 default:
                     throw new InvalidOperationException("Unsupported vocabulary: " + v);
             }
@@ -76,10 +83,16 @@ public static class Program
     private static void runInterceptorInBackground(
         string[] program,
         string[] ignore,
-        IEnumerable<HeadingPattern> vocabulary
+        IEnumerable<HeadingPattern> vocabulary,
+        bool markdown
     )
     {
-        var reFormatter = new Reformatter(vocabulary);
+        var passes = ReformatPasses.All ^ ReformatPasses.RemoveBulletPoints;
+        if (!markdown)
+        {
+            passes ^= ReformatPasses.ToMarkdown;
+        }
+        var reFormatter = new Reformatter(vocabulary, passes: passes );
         
         // The clipboard monitor needs to run in an STA thread because it maintains a hidden window that
         // receives clipboard events.
