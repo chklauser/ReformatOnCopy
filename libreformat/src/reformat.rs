@@ -13,26 +13,38 @@ use std::fmt::Write;
 ///  - input_buf and output_buf do not alias
 ///  - input_buf is at least input_len bytes long
 ///  - output_buf is at least output_capacity long
-///  - input_buf[0..input_len] is a valid UTF-8 string
+///  - input_buf\[0..input_len] is a valid UTF-8 string
 #[unsafe(no_mangle)]
 pub unsafe extern "C" fn reformat(
     input_buf: *const u8,
     input_len: usize,
     output_buf: *mut u8,
     output_capacity: usize,
+    options: *const ReformatOptions,
 ) -> isize {
     unsafe {
         let input = std::str::from_utf8_unchecked(std::slice::from_raw_parts(input_buf, input_len));
-        let ouput = std::slice::from_raw_parts_mut(output_buf, output_capacity);
-        let mut write_to_output = WriteToFixedUtf8Buf::from(ouput);
-        match reformat_rs::<_, &mut WriteToFixedUtf8Buf>(input, &mut write_to_output) {
+        let output = std::slice::from_raw_parts_mut(output_buf, output_capacity);
+        let mut write_to_output = WriteToFixedUtf8Buf::from(output);
+        match reformat_rs::<_, &mut WriteToFixedUtf8Buf>(input, &mut write_to_output, &*options) {
             Ok(_) => write_to_output.pos as isize,
             Err(_) => -1,
         }
     }
 }
 
-pub fn reformat_rs<I, W>(input: &str, output: I) -> std::fmt::Result
+#[repr(C)]
+pub struct ReformatOptions {
+    pub markdown_breaks: bool,
+}
+
+impl Default for ReformatOptions {
+    fn default() -> Self {
+        Self { markdown_breaks: true }
+    }
+}
+
+pub fn reformat_rs<I, W>(input: &str, output: I, options: &ReformatOptions) -> std::fmt::Result
 where
     W: Write,
     I: Into<W>,
@@ -41,6 +53,7 @@ where
     let pattern: &lazy_regex::Lazy<lazy_regex::Regex> = regex!(
         r"(?P<before>[.!?:-])?([\t\p{Z}--\p{Zl}]+)?(?P<break>(\r?[\n\f\u0085\u2028\u2029][\t\p{Z}--\p{Zl}]*)+)(?P<after>\p{Lu}\w+([\t\p{Z}--\p{Zl}]*\w+){0,9}:)?"
     );
+    let par_break = if options.markdown_breaks { "\n\n" } else { "\n" };
 
     // Don't want to use .replace_all because we already have an output buffer
     let mut copied_up_to = 0usize;
@@ -62,16 +75,16 @@ where
             // Case 2: One of the before/after triggers tells us to keep/normalize this break
             (Some(before), _, after) if !before.range().is_empty() => {
                 output.write_str(before.as_str())?;
-                output.write_str("\n\n")?;
+                output.write_str(par_break)?;
                 copy_optional_match(&mut output, &after)?;
             }
             (before, _, Some(after)) if !after.range().is_empty() => {
                 copy_optional_match(&mut output, &before)?;
-                output.write_str("\n\n")?;
+                output.write_str(par_break)?;
                 output.write_str(after.as_str())?;
             }
             (_, Some(break_m), _) if contains_more_than_one_line_break(break_m.as_str()) => {
-                output.write_str("\n\n")?;
+                output.write_str(par_break)?;
             }
             // Case 3 (default): Remove the break
             (before, _, after) => {
@@ -169,7 +182,7 @@ mod tests {
         let mut output = String::new();
 
         // ///// WHEN //////
-        let result = reformat_rs::<_, &mut _>(input, &mut output);
+        let result = reformat_rs::<_, &mut _>(input, &mut output, &Default::default());
 
         // ///// THEN //////
         assert_eq!(result, Ok(()));
@@ -183,7 +196,7 @@ mod tests {
         let mut output = String::new();
 
         // ///// WHEN //////
-        let result = reformat_rs::<_, &mut _>(input, &mut output);
+        let result = reformat_rs::<_, &mut _>(input, &mut output, &Default::default());
 
         // ///// THEN //////
         assert_eq!(result, Ok(()));
@@ -198,7 +211,7 @@ mod tests {
         let mut output = WriteToFixedUtf8Buf::from(&mut buf[..]);
 
         // ///// WHEN //////
-        let result = reformat_rs::<_, &mut _>(input, &mut output);
+        let result = reformat_rs::<_, &mut _>(input, &mut output, &Default::default());
 
         // ///// THEN //////
         assert_eq!(result, Err(std::fmt::Error));
@@ -212,11 +225,11 @@ mod tests {
         let mut output = String::new();
 
         // ///// WHEN //////
-        let result = reformat_rs::<_, &mut _>(input, &mut output);
+        let result = reformat_rs::<_, &mut _>(input, &mut output, &Default::default());
 
         // ///// THEN //////
         assert_eq!(result, Ok(()));
-        assert_eq!(output, "Line break in the middle of a sentence.");
+        assert_eq!(output, "Line breaks in the middle of a sentence.");
     }
 
     #[test]
@@ -226,7 +239,7 @@ mod tests {
         let mut output = String::new();
 
         // ///// WHEN //////
-        let result = reformat_rs::<_, &mut _>(input, &mut output);
+        let result = reformat_rs::<_, &mut _>(input, &mut output, &Default::default());
 
         // ///// THEN //////
         assert_eq!(result, Ok(()));
@@ -240,11 +253,11 @@ mod tests {
         let mut output = String::new();
 
         // ///// WHEN //////
-        let result = reformat_rs::<_, &mut _>(input, &mut output);
+        let result = reformat_rs::<_, &mut _>(input, &mut output, &Default::default());
 
         // ///// THEN //////
         assert_eq!(result, Ok(()));
-        assert_eq!(output, "Line break in the middle of a sentence.");
+        assert_eq!(output, "Line breaks in the middle of a sentence.");
     }
 
     #[test]
@@ -254,7 +267,7 @@ mod tests {
         let mut output = String::new();
 
         // ///// WHEN //////
-        let result = reformat_rs::<_, &mut _>(input, &mut output);
+        let result = reformat_rs::<_, &mut _>(input, &mut output, &Default::default());
 
         // ///// THEN //////
         assert_eq!(result, Ok(()));
@@ -268,7 +281,7 @@ mod tests {
         let mut output = String::new();
 
         // ///// WHEN //////
-        let result = reformat_rs::<_, &mut _>(input, &mut output);
+        let result = reformat_rs::<_, &mut _>(input, &mut output, &Default::default());
 
         // ///// THEN //////
         assert_eq!(result, Ok(()));
@@ -282,11 +295,26 @@ mod tests {
         let mut output = String::new();
 
         // ///// WHEN //////
-        let result = reformat_rs::<_, &mut _>(input, &mut output);
+        let result = reformat_rs::<_, &mut _>(input, &mut output, &Default::default());
 
         // ///// THEN //////
         assert_eq!(result, Ok(()));
         assert_eq!(output, "End.\n\nAnd beginning.");
+    }
+
+    #[test]
+    fn break_respect_break_opt() {
+        // ///// GIVEN /////
+        let input = "End. \n And beginning.";
+        let mut output = String::new();
+        let options = ReformatOptions { markdown_breaks: false };
+
+        // ///// WHEN //////
+        let result = reformat_rs::<_, &mut _>(input, &mut output, &options);
+
+        // ///// THEN //////
+        assert_eq!(result, Ok(()));
+        assert_eq!(output, "End.\nAnd beginning.");
     }
 
     #[test]
@@ -296,7 +324,7 @@ mod tests {
         let mut output = String::new();
 
         // ///// WHEN //////
-        let result = reformat_rs::<_, &mut _>(input, &mut output);
+        let result = reformat_rs::<_, &mut _>(input, &mut output, &Default::default());
 
         // ///// THEN //////
         assert_eq!(result, Ok(()));
@@ -310,7 +338,7 @@ mod tests {
         let mut output = String::new();
 
         // ///// WHEN //////
-        let result = reformat_rs::<_, &mut _>(input, &mut output);
+        let result = reformat_rs::<_, &mut _>(input, &mut output, &Default::default());
 
         // ///// THEN //////
         assert_eq!(result, Ok(()));
@@ -324,7 +352,7 @@ mod tests {
         let mut output = String::new();
 
         // ///// WHEN //////
-        let result = reformat_rs::<_, &mut _>(input, &mut output);
+        let result = reformat_rs::<_, &mut _>(input, &mut output, &Default::default());
 
         // ///// THEN //////
         assert_eq!(result, Ok(()));
@@ -338,7 +366,7 @@ mod tests {
         let mut output = String::new();
 
         // ///// WHEN //////
-        let result = reformat_rs::<_, &mut _>(input, &mut output);
+        let result = reformat_rs::<_, &mut _>(input, &mut output, &Default::default());
 
         // ///// THEN //////
         assert_eq!(result, Ok(()));
@@ -352,7 +380,7 @@ mod tests {
         let mut output = String::new();
 
         // ///// WHEN //////
-        let result = reformat_rs::<_, &mut _>(input, &mut output);
+        let result = reformat_rs::<_, &mut _>(input, &mut output, &Default::default());
 
         // ///// THEN //////
         assert_eq!(result, Ok(()));
@@ -366,7 +394,7 @@ mod tests {
         let mut output = String::new();
 
         // ///// WHEN //////
-        let result = reformat_rs::<_, &mut _>(input, &mut output);
+        let result = reformat_rs::<_, &mut _>(input, &mut output, &Default::default());
 
         // ///// THEN //////
         assert_eq!(result, Ok(()));
@@ -380,7 +408,7 @@ mod tests {
         let mut output = String::new();
 
         // ///// WHEN //////
-        let result = reformat_rs::<_, &mut _>(input, &mut output);
+        let result = reformat_rs::<_, &mut _>(input, &mut output, &Default::default());
 
         // ///// THEN //////
         assert_eq!(result, Ok(()));
@@ -394,13 +422,13 @@ mod tests {
         let mut buf = [0u8; 1024];
 
         // ///// WHEN //////
-        let result = unsafe { reformat(input.as_ptr(), input.len(), buf.as_mut_ptr(), buf.len()) };
+        let result = unsafe { reformat(input.as_ptr(), input.len(), buf.as_mut_ptr(), buf.len(), &Default::default()) };
 
         // ///// THEN //////
         assert_eq!(result, 39);
         assert_eq!(
             String::from_utf8_lossy(&buf[..result as usize]),
-            "Line break in the middle of a sentence."
+            "Line breaks in the middle of a sentence."
         );
         assert_eq!(buf[39], 0);
     }
@@ -412,7 +440,7 @@ mod tests {
         let mut buf = [0u8; 12];
 
         // ///// WHEN //////
-        let result = unsafe { reformat(input.as_ptr(), input.len(), buf.as_mut_ptr(), buf.len()) };
+        let result = unsafe { reformat(input.as_ptr(), input.len(), buf.as_mut_ptr(), buf.len(), &Default::default()) };
 
         // ///// THEN //////
         assert_eq!(result, -1);
