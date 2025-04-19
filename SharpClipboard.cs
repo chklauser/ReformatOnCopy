@@ -3,6 +3,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
+using System.ComponentModel;
 
 namespace ReformatOnCopy;
 
@@ -46,10 +47,12 @@ public class SharpClipboard : Form
     private const int WM_CLIPBOARDUPDATE = 0x031D;
 
     public record ClipboardChangedEventArgs(string Text, string? ProgramName);
-    public event EventHandler<ClipboardChangedEventArgs>? ClipboardChanged; 
+    public event EventHandler<ClipboardChangedEventArgs>? ClipboardChanged;
 
 
+    [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
     public bool Ready { get; private set; }
+    [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
     public bool MonitoringEnabled { get; set; }
     
     public SharpClipboard()

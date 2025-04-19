@@ -44,7 +44,11 @@ public enum ReformatPasses
     /// Detects headings and formats them for Markdown. Uses <see cref="HeadingPattern"/>s.
     /// </summary>
     DetectHeadings = 2,
-    All = UnnecessaryLineBreaks | DetectHeadings
+    /// <summary>
+    /// Detects Unicode bullet points (•) and removes them. They serve as breaks.
+    /// </summary>
+    RemoveBulletPoints = 4,
+    All = UnnecessaryLineBreaks | DetectHeadings | RemoveBulletPoints,
 }
 
 /// <summary>
@@ -55,7 +59,7 @@ public enum ReformatPasses
 /// <param name="ExpectColon">Whether to expect <c>":\s"</c> after the heading pattern. Defaults to <c>true</c>.</param>
 public record HeadingPattern([RegexPattern] string Pattern, string Replacement, bool ExpectColon = true);
 
-public class Reformatter
+public partial class Reformatter
 {
     [RegexPattern]
     private const string SpacePattern = @"[\t\p{Z}-[\p{Zl}]]";
@@ -111,11 +115,21 @@ public class Reformatter
     public string Reformat(string input)
     {
         var breaksRemoved = enabled(ReformatPasses.UnnecessaryLineBreaks) ? removeLineBreaksViaRust(input) : input;
-        //Console.WriteLine($"{breaksRemoved.Count(c => c == '\n')}]{breaksRemoved}");
+        var bulletsRemoved = enabled(ReformatPasses.RemoveBulletPoints)
+            ? removeBulletPoints(breaksRemoved)
+            : breaksRemoved;
         return
             aggregateHeadingPattern != null && enabled(ReformatPasses.DetectHeadings) 
-                ? reformatHeadings(breaksRemoved, aggregateHeadingPattern)
-                : breaksRemoved;
+                ? reformatHeadings(bulletsRemoved, aggregateHeadingPattern)
+                : bulletsRemoved;
+    }
+
+    [GeneratedRegex(@"^•\s*", RegexOptions.Multiline | RegexOptions.CultureInvariant)]
+    static partial Regex bulletsPattern { get; }
+
+    static string removeBulletPoints(string input)
+    {
+        return bulletsPattern.Replace(input, "");
     }
 
     private string reformatHeadings(string input, Regex aggregatePattern)
