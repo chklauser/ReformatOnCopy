@@ -51,7 +51,7 @@ where
 {
     let mut output = output.into();
     let pattern: &lazy_regex::Lazy<lazy_regex::Regex> = regex!(
-        r"(?P<before>[.!?:-])?([\t\p{Z}--\p{Zl}]+)?(?P<break>(\r?[\n\f\u0085\u2028\u2029][\t\p{Z}--\p{Zl}]*)+)(?P<after>\p{Lu}\w+([\t\p{Z}--\p{Zl}]*\w+){0,9}:)?"
+        r"(?P<before>e\.g\.|z\.B\.|i\.e\.|[.!?:-])?([\t\p{Z}--\p{Zl}]+)?(?P<break>(\r?[\n\f\u0085\u2028\u2029]\u2022?[\t\p{Z}--\p{Zl}]*)+)(?P<after>\p{Lu}\w+([\t\p{Z}--\p{Zl}]*\w+){0,9}:)?"
     );
     let par_break = if options.markdown_breaks { "\n\n" } else { "\n" };
 
@@ -72,21 +72,23 @@ where
                 write_skipping_char(&mut output, '-', before.as_str())?;
                 copy_optional_match(&mut output, &after)?;
             }
-            // Case 2: One of the before/after triggers tells us to keep/normalize this break
-            (Some(before), _, after) if !before.range().is_empty() => {
+            // Case 2b: One of the before/after triggers tells us to keep/normalize this break
+            (Some(before), _, after) if before.range().len() == 1 => {
                 output.write_str(before.as_str())?;
                 output.write_str(par_break)?;
                 copy_optional_match(&mut output, &after)?;
             }
+            // Case 2a: see above
             (before, _, Some(after)) if !after.range().is_empty() => {
                 copy_optional_match(&mut output, &before)?;
                 output.write_str(par_break)?;
                 output.write_str(after.as_str())?;
             }
+            // Case 3: normalize multiple line breaks to one paragraph break
             (_, Some(break_m), _) if contains_more_than_one_line_break(break_m.as_str()) => {
                 output.write_str(par_break)?;
             }
-            // Case 3 (default): Remove the break
+            // Case 4 (default): Remove the break
             (before, _, after) => {
                 copy_optional_match(&mut output, &before)?;
                 output.write_str(" ")?;
@@ -221,7 +223,7 @@ mod tests {
     #[test]
     fn line_break_in_the_middle_of_a_sentence_should_be_removed() {
         // ///// GIVEN /////
-        let input = "Line break in\nthe middle of a sentence.";
+        let input = "Line breaks in\nthe middle of a sentence.";
         let mut output = String::new();
 
         // ///// WHEN //////
@@ -249,7 +251,7 @@ mod tests {
     #[test]
     fn exotic_line_break_in_the_middle_of_a_sentence_should_be_removed() {
         // ///// GIVEN /////
-        let input = "Line break in\r\nthe middle of a sentence.";
+        let input = "Line breaks in\r\nthe middle of a sentence.";
         let mut output = String::new();
 
         // ///// WHEN //////
@@ -374,6 +376,64 @@ mod tests {
     }
 
     #[test]
+    fn break_after_for_example_abbreviation_should_be_removed() {
+        // ///// GIVEN /////
+        let input = "you could e.g. \n hold the door.";
+        let mut output = String::new();
+
+        // ///// WHEN //////
+        let result = reformat_rs::<_, &mut _>(input, &mut output, &Default::default());
+
+        // ///// THEN //////
+        assert_eq!(result, Ok(()));
+        assert_eq!(output, "you could e.g. hold the door.");
+    }
+
+    #[test]
+    fn break_after_for_example_german_abbreviation_should_be_removed() {
+        // ///// GIVEN /////
+        let input = "you could z.B. \n hold the door.";
+        let mut output = String::new();
+
+        // ///// WHEN //////
+        let result = reformat_rs::<_, &mut _>(input, &mut output, &Default::default());
+
+        // ///// THEN //////
+        assert_eq!(result, Ok(()));
+        assert_eq!(output, "you could z.B. hold the door.");
+    }
+
+    #[test]
+    fn break_after_that_is_abbreviation_should_be_removed() {
+        // ///// GIVEN /////
+        let input = "remain, i.e. \n hold the door.";
+        let mut output = String::new();
+
+        // ///// WHEN //////
+        let result = reformat_rs::<_, &mut _>(input, &mut output, &Default::default());
+
+        // ///// THEN //////
+        assert_eq!(result, Ok(()));
+        assert_eq!(output, "remain, i.e. hold the door.");
+    }
+
+    #[test]
+    fn treat_mdot_as_break() {
+        // ///// GIVEN /////
+        let input = "Du könntest z. B.:
+\n• einen Apfel
+\n• eine Birne";
+        let mut output = String::new();
+
+        // ///// WHEN //////
+        let result = reformat_rs::<_, &mut _>(input, &mut output, &Default::default());
+
+        // ///// THEN //////
+        assert_eq!(result, Ok(()));
+        assert_eq!(output, "Du könntest z. B.:\n\neinen Apfel\n\neine Birne");
+    }
+
+    #[test]
     fn double_exotic_line_break_in_the_middle_of_a_sentence_should_be_normalized() {
         // ///// GIVEN /////
         let input = "Line break in\r\n\r\nthe middle of a sentence.";
@@ -418,19 +478,20 @@ mod tests {
     #[test]
     fn c_wrapper_smoke_test_success() {
         // ///// GIVEN /////
-        let input = "Line break in\nthe middle of a sentence.";
+        let input = "Line breaks in\nthe middle of a sentence.";
         let mut buf = [0u8; 1024];
 
         // ///// WHEN //////
         let result = unsafe { reformat(input.as_ptr(), input.len(), buf.as_mut_ptr(), buf.len(), &Default::default()) };
 
         // ///// THEN //////
-        assert_eq!(result, 39);
+        const EXPECTED_LEN: isize = 40;
+        assert_eq!(result, EXPECTED_LEN);
         assert_eq!(
             String::from_utf8_lossy(&buf[..result as usize]),
             "Line breaks in the middle of a sentence."
         );
-        assert_eq!(buf[39], 0);
+        assert_eq!(buf[EXPECTED_LEN as usize], 0);
     }
 
     #[test]
