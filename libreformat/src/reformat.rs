@@ -15,7 +15,7 @@ use regex::Match;
 ///  - output_buf is at least output_capacity long
 ///  - input_buf[0..input_len] is a valid UTF-8 string
 #[no_mangle]
-pub unsafe extern fn reformat(input_buf: *const u8, input_len: usize, output_buf: *mut u8, output_capacity: usize) -> isize {
+pub unsafe extern "C" fn reformat(input_buf: *const u8, input_len: usize, output_buf: *mut u8, output_capacity: usize) -> isize {
     let input = std::str::from_utf8_unchecked(std::slice::from_raw_parts(input_buf, input_len));
     let ouput = std::slice::from_raw_parts_mut(output_buf, output_capacity);
     let mut write_to_output = WriteToFixedUtf8Buf::from(ouput);

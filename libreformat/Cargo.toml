@@ -10,5 +10,5 @@ crate-type = ["cdylib"]
 
 
 [dependencies]
-lazy-regex = "2.3.0"
-regex = "1.5.5"
+lazy-regex = "3.4.1"
+regex = "1.11.1"
