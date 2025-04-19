@@ -1,6 +1,6 @@
-use std::fmt::Write;
 use lazy_regex::regex;
 use regex::Match;
+use std::fmt::Write;
 
 /// FFI wrapper around the `reformat_rs` function. Takes a UTF-8 encoded string in `input_buf`, of
 /// length `input_len`, and writes the reformatted string to `output_buf` as UTF-8.
@@ -14,24 +14,33 @@ use regex::Match;
 ///  - input_buf is at least input_len bytes long
 ///  - output_buf is at least output_capacity long
 ///  - input_buf[0..input_len] is a valid UTF-8 string
-#[no_mangle]
-pub unsafe extern "C" fn reformat(input_buf: *const u8, input_len: usize, output_buf: *mut u8, output_capacity: usize) -> isize {
-    let input = std::str::from_utf8_unchecked(std::slice::from_raw_parts(input_buf, input_len));
-    let ouput = std::slice::from_raw_parts_mut(output_buf, output_capacity);
-    let mut write_to_output = WriteToFixedUtf8Buf::from(ouput);
-    match reformat_rs::<_, &mut WriteToFixedUtf8Buf>(input, &mut write_to_output) {
-        Ok(_) => {
-            write_to_output.pos as isize
-        },
-        Err(_) => {
-            -1
+#[unsafe(no_mangle)]
+pub unsafe extern "C" fn reformat(
+    input_buf: *const u8,
+    input_len: usize,
+    output_buf: *mut u8,
+    output_capacity: usize,
+) -> isize {
+    unsafe {
+        let input = std::str::from_utf8_unchecked(std::slice::from_raw_parts(input_buf, input_len));
+        let ouput = std::slice::from_raw_parts_mut(output_buf, output_capacity);
+        let mut write_to_output = WriteToFixedUtf8Buf::from(ouput);
+        match reformat_rs::<_, &mut WriteToFixedUtf8Buf>(input, &mut write_to_output) {
+            Ok(_) => write_to_output.pos as isize,
+            Err(_) => -1,
         }
     }
 }
 
-pub fn reformat_rs<I, W>(input: &str, output: I) -> std::fmt::Result where W: Write, I: Into<W> {
+pub fn reformat_rs<I, W>(input: &str, output: I) -> std::fmt::Result
+where
+    W: Write,
+    I: Into<W>,
+{
     let mut output = output.into();
-    let pattern: &lazy_regex::Lazy<lazy_regex::Regex> = regex!(r"(?P<before>[.!?:-])?([\t\p{Z}--\p{Zl}]+)?(?P<break>(\r?[\n\f\u0085\u2028\u2029][\t\p{Z}--\p{Zl}]*)+)(?P<after>\p{Lu}\w+([\t\p{Z}--\p{Zl}]*\w+){0,9}:)?");
+    let pattern: &lazy_regex::Lazy<lazy_regex::Regex> = regex!(
+        r"(?P<before>[.!?:-])?([\t\p{Z}--\p{Zl}]+)?(?P<break>(\r?[\n\f\u0085\u2028\u2029][\t\p{Z}--\p{Zl}]*)+)(?P<after>\p{Lu}\w+([\t\p{Z}--\p{Zl}]*\w+){0,9}:)?"
+    );
 
     // Don't want to use .replace_all because we already have an output buffer
     let mut copied_up_to = 0usize;
@@ -46,26 +55,26 @@ pub fn reformat_rs<I, W>(input: &str, output: I) -> std::fmt::Result where W: Wr
 
         match (m.name("before"), m.name("break"), m.name("after")) {
             // Case 1: Hyphen at the end of the line => remove the hyphen and line break
-            (Some(before), _,after) if before.as_str().contains("-") => {
+            (Some(before), _, after) if before.as_str().contains("-") => {
                 write_skipping_char(&mut output, '-', before.as_str())?;
                 copy_optional_match(&mut output, &after)?;
             }
             // Case 2: One of the before/after triggers tells us to keep/normalize this break
-            (Some(before), _,after) if !before.range().is_empty() => {
+            (Some(before), _, after) if !before.range().is_empty() => {
                 output.write_str(before.as_str())?;
                 output.write_str("\n\n")?;
                 copy_optional_match(&mut output, &after)?;
             }
-            (before,_,Some(after)) if !after.range().is_empty() => {
+            (before, _, Some(after)) if !after.range().is_empty() => {
                 copy_optional_match(&mut output, &before)?;
                 output.write_str("\n\n")?;
                 output.write_str(after.as_str())?;
             }
-            (_,Some(break_m), _) if contains_more_than_one_line_break(break_m.as_str()) => {
+            (_, Some(break_m), _) if contains_more_than_one_line_break(break_m.as_str()) => {
                 output.write_str("\n\n")?;
             }
             // Case 3 (default): Remove the break
-            (before,_,after) => {
+            (before, _, after) => {
                 copy_optional_match(&mut output, &before)?;
                 output.write_str(" ")?;
                 copy_optional_match(&mut output, &after)?;
@@ -85,7 +94,10 @@ pub fn reformat_rs<I, W>(input: &str, output: I) -> std::fmt::Result where W: Wr
 }
 
 /// Copy `input` to `output` skipping over any occurrences of the character `skip`.
-fn write_skipping_char<W>(output: &mut W, skip: char, input: &str) -> std::fmt::Result where W: Write {
+fn write_skipping_char<W>(output: &mut W, skip: char, input: &str) -> std::fmt::Result
+where
+    W: Write,
+{
     let mut copied_up_to = 0usize;
     while copied_up_to < input.len() {
         let next_stop_at = input[copied_up_to..].find(skip).unwrap_or(input.len());
@@ -96,8 +108,13 @@ fn write_skipping_char<W>(output: &mut W, skip: char, input: &str) -> std::fmt::
 }
 
 /// Copy `opt_match` to `output` if it is not empty.
-fn copy_optional_match<W>(mut output: W, opt_match: &Option<Match>) -> std::fmt::Result where W: Write {
-    opt_match.map(|m| output.write_str(m.as_str())).unwrap_or(Ok(()))
+fn copy_optional_match<W>(mut output: W, opt_match: &Option<Match>) -> std::fmt::Result
+where
+    W: Write,
+{
+    opt_match
+        .map(|m| output.write_str(m.as_str()))
+        .unwrap_or(Ok(()))
 }
 
 fn contains_more_than_one_line_break(input: &str) -> bool {
@@ -125,10 +142,7 @@ struct WriteToFixedUtf8Buf<'a> {
 
 impl<'a> From<&'a mut [u8]> for WriteToFixedUtf8Buf<'a> {
     fn from(buf: &'a mut [u8]) -> Self {
-        WriteToFixedUtf8Buf {
-            buf,
-            pos: 0,
-        }
+        WriteToFixedUtf8Buf { buf, pos: 0 }
     }
 }
 
@@ -289,10 +303,8 @@ mod tests {
         assert_eq!(output, "End:\n\nAnd beginning.");
     }
 
-
     #[test]
-    fn break_after_question_should_be_retained()
-    {
+    fn break_after_question_should_be_retained() {
         // ///// GIVEN /////
         let input = "End? \n And beginning.";
         let mut output = String::new();
@@ -386,7 +398,10 @@ mod tests {
 
         // ///// THEN //////
         assert_eq!(result, 39);
-        assert_eq!(String::from_utf8_lossy(&buf[..result as usize]), "Line break in the middle of a sentence.");
+        assert_eq!(
+            String::from_utf8_lossy(&buf[..result as usize]),
+            "Line break in the middle of a sentence."
+        );
         assert_eq!(buf[39], 0);
     }
 
@@ -396,7 +411,6 @@ mod tests {
         let input = "Line break in\nthe middle of a sentence.";
         let mut buf = [0u8; 12];
 
-
         // ///// WHEN //////
         let result = unsafe { reformat(input.as_ptr(), input.len(), buf.as_mut_ptr(), buf.len()) };
 
@@ -404,5 +418,4 @@ mod tests {
         assert_eq!(result, -1);
         assert_eq!(buf[0], 0u8);
     }
-
 }
